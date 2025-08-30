@@ -3649,7 +3649,7 @@ details-disclosure > details {
   max-width: 600px;
   font-size: 16px;
 }
-.gift-banner__shop-btn {
+.gift-banner__button {
   display: inline-block;
   padding: 12px 25px;
   border: 2px solid black;
@@ -3658,7 +3658,7 @@ details-disclosure > details {
   color: black;
   transition: all 0.3s ease;
 }
-.gift-banner__shop-btn:hover {
+.gift-banner__button:hover {
   background: black;
   color: white;
   transform: scale(1.05);
