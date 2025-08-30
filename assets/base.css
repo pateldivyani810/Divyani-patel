@@ -3691,27 +3691,27 @@ details-disclosure > details {
   max-width: 400px;
   background-color: #fff;  
 }
-.overlay-banner__content--top-left {
+.gift-banner__content--top-left {
   top: 20px;
   left: 20px;
   text-align: left;
 }
-.overlay-banner__content--top-right {
+.gift-banner__content--top-right {
   top: 20px;
   right: 20px;
   text-align: right;
 }
-.overlay-banner__content--bottom-left {
+.gift-banner__content--bottom-left {
   bottom: 20px;
   left: 20px;
   text-align: left;
 }
-.overlay-banner__content--bottom-right {
+.gift-banner__content--bottom-right {
   bottom: 20px;
   right: 20px;
   text-align: right;
 }
-.overlay-banner__content--center {
+.gift-banner__content--center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
