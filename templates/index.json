@@ -10,7 +10,7 @@
 {
   "sections": {
     "gift_guide_header_beRDNR": {
-      "type": "Gift-guide-header",
+      "type": "Gift-guide-banner",
       "name": "Gift Guide Baneer",
       "settings": {
         "logo_text": "TISSO VISON",
