@@ -3651,15 +3651,15 @@ details-disclosure > details {
 .gift-banner__button {
   display: inline-block;
   padding: 12px 25px;
-  border: 2px solid black;
+  border: 2px solid #000;
   text-decoration: none;
   font-weight: bold;
-  background-color: black;
+  background-color: #000;
   transition: all 0.3s ease;
   color:#fff;
 }
 .gift-banner__button:hover {
-  background: black;
+  background: #000;
   color: white;
   transform: scale(1.05);
 }
@@ -3669,7 +3669,6 @@ details-disclosure > details {
   color: #333;
   text-transform: uppercase;
 }
-
 .overlay-banner {
   position: relative;
   background-size: cover;
@@ -3677,7 +3676,6 @@ details-disclosure > details {
   min-height: 750px;
   display: flex;
 }
-
 .gift-banner__overlay {
   position: absolute;
   top: 0;
@@ -3685,7 +3683,6 @@ details-disclosure > details {
   width: 100%;
   height: 100%;
 }
-
 .gift-banner__content {
   position: absolute;
   color: #000;
