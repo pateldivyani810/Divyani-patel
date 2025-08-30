@@ -3619,6 +3619,8 @@ details-disclosure > details {
   align-items: center;
   font-size: 14px;
   margin-bottom: 50px;
+  background-color: #F5F5F5;
+  padding: 10px 15px;
 }
 .gift-banner__logo {
   font-weight: bold;
