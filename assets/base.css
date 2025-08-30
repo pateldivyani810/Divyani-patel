@@ -3603,6 +3603,14 @@ details-disclosure > details {
   text-align: center;
   font-family: Arial, sans-serif;
 }
+.gift-banner__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  background-color: #F5F5F5;
+  padding: 10px 15px;
+}
 .gift-banner__small-text {
     font-family: Jost;
     font-weight: 400;
@@ -3611,14 +3619,6 @@ details-disclosure > details {
     letter-spacing: 0px;
     text-align: center;
     vertical-align: middle;
-}
-.gift-banner__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  background-color: #F5F5F5;
-  padding: 10px 15px;
 }
 .gift-banner__logo {
   font-weight: 700;
@@ -3643,7 +3643,7 @@ details-disclosure > details {
   font-size: 48px;
   font-weight: bold;
 }
-.gift-banner__desc {
+.gift-banner__subheading {
   margin: 20px auto;
   max-width: 600px;
   font-size: 16px;
