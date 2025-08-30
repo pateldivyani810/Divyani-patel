@@ -3674,7 +3674,7 @@ details-disclosure > details {
   position: relative;
   background-size: cover;
   background-position: center;
-  min-height: 400px;
+  min-height: 750px;
   display: flex;
 }
 
