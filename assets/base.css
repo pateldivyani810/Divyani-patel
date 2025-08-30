@@ -3597,9 +3597,12 @@ details-disclosure > details {
 }
 
 /* custom css for gift banner section */
-
+.gift-banner-header .container{
+  max-width:1600px;
+  margin:0 auto;
+  padding:0 15px;
+}
 .gift-banner-header {
-
   text-align: center;
   font-family: Arial, sans-serif;
 }
