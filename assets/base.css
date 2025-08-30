@@ -3689,11 +3689,12 @@ details-disclosure > details {
 
 .gift-banner__content {
   position: absolute;
-  color: #fff;
+  color: #000;
   z-index: 2;
   padding: 20px;
   max-width: 400px;
   text-align: left;
+  background-color: #fff;  
 }
 .overlay-banner__content--top-left {
   top: 20px;
