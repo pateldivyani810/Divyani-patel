@@ -3678,7 +3678,7 @@ details-disclosure > details {
 }
 
 .gift-banner__content {
-  max-width: 900px;
+  max-width: 400px;
   margin: 0 auto;
 }
 .gift-banner__content--left { text-align: left; }
