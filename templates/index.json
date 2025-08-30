@@ -17,9 +17,10 @@
         "top_text": "Find the ideal gift for your loved ones.",
         "choose_gift_text": "CHOOSE GIFT",
         "heading": "The Gift Guide",
-        "sub_text": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "shop_button_text": "SHOP NOW",
+        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "button_text": "SHOP NOW",
         "shop_button_link": "",
+        "content_alignment": "left",
         "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
     }
