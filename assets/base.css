@@ -3721,3 +3721,6 @@ details-disclosure > details {
   transform: translate(-50%, -50%);
   text-align: center;
 }
+.gift-banner {
+    position: relative;
+}
