@@ -12,7 +12,18 @@
     "gift_guide_header_beRDNR": {
       "type": "Gift-guide-banner",
       "name": "Gift Guide Baneer",
-      "settings": {}
+      "settings": {
+        "logo_text": "TISSO VISON",
+        "top_text": "Find the ideal gift for your loved ones.",
+        "banner_image": "shopify://shop_images/woman-in-the-city_925x_fa6b306e-cdb3-4593-94a7-91ba71d3e059.jpg",
+        "choose_gift_text": "CHOOSE GIFT",
+        "heading": "The Gift Guide",
+        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "button_text": "SHOP NOW",
+        "shop_button_link": "",
+        "content_alignment": "center",
+        "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      }
     }
   },
   "order": [
