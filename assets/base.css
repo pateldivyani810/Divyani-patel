@@ -3623,7 +3623,10 @@ details-disclosure > details {
   padding: 10px 15px;
 }
 .gift-banner__logo {
-  font-weight: bold;
+  font-weight: 700;
+  color: #000;
+  font-size: 24px;
+}
 }
 .gift-banner__choose-btn {
   background: #ffeb3b;
