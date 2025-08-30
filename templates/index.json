@@ -12,69 +12,10 @@
     "gift_guide_header_beRDNR": {
       "type": "Gift-guide-banner",
       "name": "Gift Guide Baneer",
-      "settings": {
-        "logo_text": "TISSO VISON",
-        "top_text": "Find the ideal gift for your loved ones.",
-        "choose_gift_text": "CHOOSE GIFT",
-        "heading": "The Gift Guide",
-        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "button_text": "SHOP NOW",
-        "shop_button_link": "",
-        "content_alignment": "left",
-        "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
-      }
-    },
-    "image_banner_qiCF97": {
-      "type": "image-banner",
-      "blocks": {
-        "heading_btNyiD": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_hMGG3j": {
-          "type": "text",
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        },
-        "buttons_YDaehX": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Button label",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "Button label",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_btNyiD",
-        "text_hMGG3j",
-        "buttons_YDaehX"
-      ],
-      "name": "t:sections.image-banner.presets.name",
-      "settings": {
-        "image_overlay_opacity": 0,
-        "image_height": "medium",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-left",
-        "desktop_content_alignment": "center",
-        "show_text_box": true,
-        "color_scheme": "",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "center",
-        "show_text_below": true
-      }
+      "settings": {}
     }
   },
   "order": [
-    "gift_guide_header_beRDNR",
-    "image_banner_qiCF97"
+    "gift_guide_header_beRDNR"
   ]
 }
