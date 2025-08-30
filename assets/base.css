@@ -3643,8 +3643,9 @@ details-disclosure > details {
   transform: scale(1.05);
 }
 .gift-banner__heading {
-  font-size: 48px;
-  font-weight: bold;
+  font-size: 38px;
+  font-weight: 700;
+  margin: 0;
 }
 .gift-banner__subheading {
   margin: 20px auto;
