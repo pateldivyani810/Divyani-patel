@@ -1,4 +1,4 @@
-{% comment %} <section class="gift-banner-header">
+<section class="gift-banner-header">
   <div class="gift-banner__top">
     <div class="gift-banner__logo">{{ section.settings.logo_text }}</div>
     <div class="gift-banner__small-text">{{ section.settings.top_text }}</div>
@@ -7,8 +7,7 @@
       <span class="arrow">→</span>
     </a>
   </div>
-  <div class="overlay-banner">
-  
+  <div class="overlay-banner" style="background-image: url({{ section.settings.banner_image | img_url: '1920x' }});">
    </div>
     <div class="gift-banner__overlay">
       <div class="gift-banner__content gift-banner__content--{{ section.settings.content_alignment }}">
@@ -105,145 +104,6 @@
   "presets": [
     {
       "name": "Gift Guide Banner"
-    }
-  ]
-}
-{% endschema %} {% endcomment %}
-<div class="slideshow-banner">
-  <div class="slideshow-banner__wrapper">
-    {% for block in section.blocks %}
-      <div class="slideshow-banner__slide" 
-           style="background-image: url({{ block.settings.slide_image | img_url: '1600x' }});">
-        <div class="slideshow-banner__overlay"></div>
-        <div class="slideshow-banner__content slideshow-banner__content--{{ block.settings.content_alignment }}">
-          {% if block.settings.slide_heading != blank %}
-            <h2>{{ block.settings.slide_heading }}</h2>
-          {% endif %}
-          {% if block.settings.slide_subheading != blank %}
-            <p>{{ block.settings.slide_subheading }}</p>
-          {% endif %}
-          {% if block.settings.slide_link != blank %}
-            <a href="{{ block.settings.slide_link }}" class="slideshow-banner__button">
-              {{ block.settings.button_text }}
-            </a>
-          {% endif %}
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-
-{% stylesheet %}
-.slideshow-banner {
-  position: relative;
-  overflow: hidden;
-}
-.slideshow-banner__wrapper {
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.slideshow-banner__slide {
-  flex: 0 0 100%;
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  min-height: 500px;
-  scroll-snap-align: start;
-}
-.slideshow-banner__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-}
-.slideshow-banner__content {
-  position: absolute;
-  z-index: 2;
-  color: #fff;
-  padding: 20px;
-  max-width: 600px;
-}
-/* Alignment options */
-.slideshow-banner__content--top-left { top: 20px; left: 20px; text-align: left; }
-.slideshow-banner__content--top-right { top: 20px; right: 20px; text-align: right; }
-.slideshow-banner__content--bottom-left { bottom: 20px; left: 20px; text-align: left; }
-.slideshow-banner__content--bottom-right { bottom: 20px; right: 20px; text-align: right; }
-.slideshow-banner__content--center { top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-
-.slideshow-banner__button {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 12px 30px;
-  background: #ff6f61;
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-}
-{% endstylesheet %}
-
-{% schema %}
-{
-  "name": "Gift Guide Banner",
-  "settings": [],
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Slide",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "slide_image",
-          "label": "Slide Image"
-        },
-        {
-          "type": "text",
-          "id": "slide_heading",
-          "label": "Heading",
-          "default": "Your Heading"
-        },
-        {
-          "type": "textarea",
-          "id": "slide_subheading",
-          "label": "Subheading",
-          "default": "Your subheading goes here"
-        },
-        {
-          "type": "url",
-          "id": "slide_link",
-          "label": "Slide Link"
-        },
-        {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button Text",
-          "default": "Shop Now"
-        },
-        {
-          "type": "select",
-          "id": "content_alignment",
-          "label": "Content Alignment",
-          "default": "center",
-          "options": [
-            { "value": "top-left", "label": "Top Left" },
-            { "value": "top-right", "label": "Top Right" },
-            { "value": "bottom-left", "label": "Bottom Left" },
-            { "value": "bottom-right", "label": "Bottom Right" },
-            { "value": "center", "label": "Center" }
-          ]
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Gift Guide Banner",
-      "category": "Banner",
-      "blocks": [
-        { "type": "slide" },
-        { "type": "slide" }
-      ]
     }
   ]
 }
