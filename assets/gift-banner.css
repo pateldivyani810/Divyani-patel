@@ -1,0 +1,73 @@
+.gift-banner {
+  position: relative;
+  text-align: center;
+  padding: 40px 0px;
+  font-family: Arial, sans-serif;
+}
+.gift-banner__small-text {
+    font-family: Jost;
+    font-weight: 400;
+    font-size: 15.67px;
+    line-height: 35.8px;
+    letter-spacing: 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+.gift-banner__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 50px;
+  background-color: #F5F5F5;
+  padding: 10px 15px;
+}
+.gift-banner__logo {
+  font-weight: 700;
+  color: #000;
+  font-size: 24px;
+}
+}
+.gift-banner__choose-btn {
+  background: #ffeb3b;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.gift-banner__choose-btn:hover {
+  background: black;
+  color: white;
+  transform: scale(1.05);
+}
+.gift-banner__heading {
+  font-size: 48px;
+  font-weight: bold;
+}
+.gift-banner__desc {
+  margin: 20px auto;
+  max-width: 600px;
+  font-size: 16px;
+}
+.gift-banner__shop-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  border: 2px solid black;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  transition: all 0.3s ease;
+}
+.gift-banner__shop-btn:hover {
+  background: black;
+  color: white;
+  transform: scale(1.05);
+}
+.gift-banner__bottom {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #333;
+  text-transform: uppercase;
+}
