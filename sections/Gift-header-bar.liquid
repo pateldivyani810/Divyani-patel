@@ -1,22 +1,22 @@
 <section 
-  class="gift-guide-banner" 
+  class="gift-guide-header" 
   style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
 >
-  <div class="gift-guide-banner__container alignment-{{ section.settings.content_alignment }}">
-    <h2 class="gift-guide-banner__heading">{{ section.settings.heading }}</h2>
-    <p class="gift-guide-banner__subheading">{{ section.settings.subheading }}</p>
-    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+  <div class="gift-guide-header__container alignment-{{ section.settings.content_alignment }}">
+    <h2 class="gift-guide-header__heading">{{ section.settings.heading }}</h2>
+    <p class="gift-guide-header__subheading">{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
       {{ section.settings.button_label }}
     </a>
 
     <!-- Mobile Toggle -->
-    <button class="gift-guide-banner__toggle" aria-label="Toggle Menu">☰</button>
+    <button class="gift-guide-header__toggle" aria-label="Toggle Menu">☰</button>
   </div>
 
   <!-- Mobile Dropdown -->
-  <div class="gift-guide-banner__mobile-menu">
+  <div class="gift-guide-header__mobile-menu">
     <p>{{ section.settings.subheading }}</p>
-    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+    <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
       {{ section.settings.button_label }}
     </a>
   </div>
@@ -24,7 +24,7 @@
 
 {% schema %}
 {
-  "name": "Gift Guide Banner",
+  "name": "Gift Guide header",
   "settings": [
     {
       "type": "text",
@@ -74,7 +74,7 @@
   ],
   "presets": [
     {
-      "name": "Gift Guide Banner",
+      "name": "Gift Guide header",
       "category": "Custom"
     }
   ]
@@ -83,13 +83,13 @@
 
 
 <style>
-.gift-guide-banner {
+.gift-guide-header {
   width: 100%;
   border-bottom: 1px solid #eee;
   padding: 1rem 1.5rem;
   font-family: Arial, sans-serif;
 }
-.gift-guide-banner__container {
+.gift-guide-header__container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -97,18 +97,18 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.gift-guide-banner__heading {
+.gift-guide-header__heading {
   font-size: 1.2rem;
   font-weight: 700;
   margin: 0;
 }
-.gift-guide-banner__subheading {
+.gift-guide-header__subheading {
   font-size: 0.95rem;
   margin: 0 1rem;
   flex: 1;
   text-align: center;
 }
-.gift-guide-banner__btn {
+.gift-guide-header__btn {
   background: #ffeb3b;
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
@@ -117,10 +117,10 @@
   font-weight: 600;
   transition: background 0.3s ease;
 }
-.gift-guide-banner__btn:hover {
+.gift-guide-header__btn:hover {
   background: #fdd835;
 }
-.gift-guide-banner__toggle {
+.gift-guide-header__toggle {
   display: none;
   font-size: 1.4rem;
   background: none;
@@ -135,21 +135,21 @@
 
 /* 📱 Mobile */
 @media (max-width: 768px) {
-  .gift-guide-banner__subheading,
-  .gift-guide-banner__btn {
+  .gift-guide-header__subheading,
+  .gift-guide-header__btn {
     display: none;
   }
-  .gift-guide-banner__toggle {
+  .gift-guide-header__toggle {
     display: block;
   }
-  .gift-guide-banner__mobile-menu {
+  .gift-guide-header__mobile-menu {
     display: none;
     background: #f9f9f9;
     padding: 1rem;
     text-align: center;
     border-top: 1px solid #eee;
   }
-  .gift-guide-banner__mobile-menu.show {
+  .gift-guide-header__mobile-menu.show {
     display: block;
     animation: slideDown 0.3s ease-out;
   }
@@ -162,8 +162,8 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.querySelector(".gift-guide-banner__toggle");
-  const menu = document.querySelector(".gift-guide-banner__mobile-menu");
+  const toggle = document.querySelector(".gift-guide-header__toggle");
+  const menu = document.querySelector(".gift-guide-header__mobile-menu");
   if (toggle && menu) {
     toggle.addEventListener("click", function () {
       menu.classList.toggle("show");
