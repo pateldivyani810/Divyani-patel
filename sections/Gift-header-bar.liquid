@@ -1,23 +1,174 @@
-<header class="header-bar">
-  <div class="header-bar__container">
-    <div class="header-bar__logo">
-      <a href="/">TISSO VISON</a>
-    </div>
-    <div class="header-bar__tagline">
-      Find the ideal gift for your loved ones.
-    </div>
-    <div class="header-bar__cta">
-      <a href="/collections/gift-guide" class="header-bar__btn">CHOOSE GIFT →</a>
-    </div>
+{% schema %}
+{
+  "name": "Gift Guide Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "CHOOSE GIFT →"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Guide Banner",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section 
+  class="gift-guide-banner" 
+  style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
+>
+  <div class="gift-guide-banner__container alignment-{{ section.settings.content_alignment }}">
+    <h2 class="gift-guide-banner__heading">{{ section.settings.heading }}</h2>
+    <p class="gift-guide-banner__subheading">{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+      {{ section.settings.button_label }}
+    </a>
+
     <!-- Mobile Toggle -->
-    <button class="header-bar__toggle" aria-label="Toggle Menu">☰</button>
+    <button class="gift-guide-banner__toggle" aria-label="Toggle Menu">☰</button>
   </div>
 
   <!-- Mobile Dropdown -->
-  <div class="header-bar__mobile-menu">
-    <p>Find the ideal gift for your loved ones.</p>
-    <a href="/collections/gift-guide" class="header-bar__btn">CHOOSE GIFT →</a>
+  <div class="gift-guide-banner__mobile-menu">
+    <p>{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+      {{ section.settings.button_label }}
+    </a>
   </div>
-</header>
+</section>
+
+<style>
+.gift-guide-banner {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 1.5rem;
+  font-family: Arial, sans-serif;
+}
+.gift-guide-banner__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.gift-guide-banner__heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+.gift-guide-banner__subheading {
+  font-size: 0.95rem;
+  margin: 0 1rem;
+  flex: 1;
+  text-align: center;
+}
+.gift-guide-banner__btn {
+  background: #ffeb3b;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+.gift-guide-banner__btn:hover {
+  background: #fdd835;
+}
+.gift-guide-banner__toggle {
+  display: none;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* alignment */
+.alignment-left { text-align: left; }
+.alignment-center { text-align: center; }
+.alignment-right { text-align: right; }
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .gift-guide-banner__subheading,
+  .gift-guide-banner__btn {
+    display: none;
+  }
+  .gift-guide-banner__toggle {
+    display: block;
+  }
+  .gift-guide-banner__mobile-menu {
+    display: none;
+    background: #f9f9f9;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+  .gift-guide-banner__mobile-menu.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toggle = document.querySelector(".gift-guide-banner__toggle");
+  const menu = document.querySelector(".gift-guide-banner__mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", function () {
+      menu.classList.toggle("show");
+    });
+  }
+});
+</script>
 
 
