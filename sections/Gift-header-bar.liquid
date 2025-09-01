@@ -168,8 +168,18 @@
     animation: slideDown 0.3s ease-out;
   }
   .gift-guide-header__container {
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+  justify-content: flex-end;
+  display: inline-flex;
+  width: 100%;
+}
+.gift-guide-banner__toggle {
+    border: none;
+    font-size: 20px;
+    background: none;
+    width: 10%;
+}
+.gift-guide-header__heading {
+    width: 90%;
 }
 .gift-guide-header__mobile-menu.show p, .gift-guide-header__mobile-menu.show a {
     display: block;
@@ -188,11 +198,6 @@
   /* desktop never shows mobile menu */
   #shopify-section-{{ section.id }} .gift-guide-banner__mobile-menu { display:none !important; }
   #shopify-section-{{ section.id }} .gift-guide-banner__toggle { display:none !important; }
-}
-.gift-guide-banner__toggle {
-    border: none;
-    font-size: 20px;
-    background: none;
 }
 </style>
 
