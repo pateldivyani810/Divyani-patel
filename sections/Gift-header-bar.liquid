@@ -1,16 +1,15 @@
-<section 
-  class="gift-guide-header" 
-  style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
+<section class="gift-guide-header" style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
 >
+    
+    <!-- Mobile Toggle -->
+    <button class="gift-guide-header__toggle" aria-label="Toggle Menu">☰</button>
+    
   <div class="gift-guide-header__container alignment-{{ section.settings.content_alignment }}">
     <h2 class="gift-guide-header__heading">{{ section.settings.heading }}</h2>
     <p class="gift-guide-header__subheading">{{ section.settings.subheading }}</p>
     <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
       {{ section.settings.button_label }}
     </a>
-
-    <!-- Mobile Toggle -->
-    <button class="gift-guide-header__toggle" aria-label="Toggle Menu">☰</button>
   </div>
 
   <!-- Mobile Dropdown -->
