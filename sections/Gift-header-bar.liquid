@@ -174,15 +174,30 @@
 </style>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.querySelector(".gift-guide-header__toggle");
-  const menu = document.querySelector(".gift-guide-header__mobile-menu");
-  if (toggle && menu) {
-    toggle.addEventListener("click", function () {
-      menu.classList.toggle("show");
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".gift-guide-banner__toggle");
+    const mobileMenu = document.querySelector(".gift-guide-banner__mobile-menu");
+
+    if (!toggleBtn || !mobileMenu) return;
+
+    toggleBtn.addEventListener("click", () => {
+      // Toggle "show" class for open/close
+      mobileMenu.classList.toggle("show");
+
+      // Update aria-expanded for accessibility
+      const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
+      toggleBtn.setAttribute("aria-expanded", !expanded);
     });
-  }
-});
+
+    // Optional: Close menu when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!mobileMenu.contains(event.target) && !toggleBtn.contains(event.target)) {
+        mobileMenu.classList.remove("show");
+        toggleBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
 </script>
+
 
 
