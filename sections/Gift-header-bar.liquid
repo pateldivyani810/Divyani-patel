@@ -26,11 +26,7 @@
 </div>
 
 {%- comment -%} Mobile dropdown content {%- endcomment -%}
-<div
-  id="gift-menu-{{ section.id }}"
-  class="gift-guide-banner__mobile-menu"
-  hidden
->
+<div id="gift-menu-{{ section.id }}" class="gift-guide-banner__mobile-menu" hidden>
   <p>{{ section.settings.subheading }}</p>
   <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
     {{ section.settings.button_label }}
@@ -130,7 +126,7 @@
   flex: 1;
   text-align: center;
 }
-.gift-guide-header__btn {
+.gift-guide-header__btn ,.gift-guide-banner__btn{
    background: #ffeb3b;
   padding: 10px 20px;
   font-weight: bold;
@@ -139,7 +135,7 @@
   border-radius: 4px;
   transition: all 0.3s ease;
 }
-.gift-guide-header__btn:hover {
+.gift-guide-header__btn:hover.gift-guide-banner__btn:hover {
    background: black;
   color: white;
   transform: scale(1.05);
