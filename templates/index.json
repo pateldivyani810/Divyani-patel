@@ -24,22 +24,9 @@
         "content_alignment": "bottom-left",
         "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
-    },
-    "gift_header_bar_FDKc7b": {
-      "type": "Gift-header-bar",
-      "name": "Gift Guide Banner",
-      "settings": {
-        "heading": "TISSO VISON",
-        "subheading": "Find the ideal gift for your loved ones.",
-        "button_label": "CHOOSE GIFT →",
-        "button_link": "",
-        "content_alignment": "center",
-        "background_color": "#ffffff"
-      }
     }
   },
   "order": [
-    "gift_guide_header_beRDNR",
-    "gift_header_bar_FDKc7b"
+    "gift_guide_header_beRDNR"
   ]
 }

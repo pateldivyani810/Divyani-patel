@@ -55,10 +55,23 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "gift_header_bar_EhMCPB": {
+      "type": "Gift-header-bar",
+      "name": "Gift Guide header",
+      "settings": {
+        "heading": "TISSO VISON",
+        "subheading": "Find the ideal gift for your loved ones.",
+        "button_label": "CHOOSE GIFT →",
+        "button_link": "",
+        "content_alignment": "center",
+        "background_color": "#ffffff"
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "gift_header_bar_EhMCPB"
   ]
 }
