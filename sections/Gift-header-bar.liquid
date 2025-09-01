@@ -2,14 +2,8 @@
 >
   <div class="gift-guide-header__container alignment-{{ section.settings.content_alignment }}">
     {%- comment -%} Mobile toggle button {%- endcomment -%}
-  <button
-    id="gift-toggle-{{ section.id }}"
-    class="gift-guide-banner__toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="gift-menu-{{ section.id }}"
-    aria-label="Toggle message"
-  >☰</button>
+  <button class="gift-guide-banner__toggle" id="gift-toggle-{{ section.id }}" type="button" aria-expanded="false"
+    aria-controls="gift-menu-{{ section.id }}" aria-label="Toggle message">☰</button>
     <h2 class="gift-guide-header__heading">{{ section.settings.heading }}</h2>
     <p class="gift-guide-header__subheading">{{ section.settings.subheading }}</p>
     <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
