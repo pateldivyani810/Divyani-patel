@@ -3775,7 +3775,7 @@ details-disclosure > details {
 .gift-banner {
     position: relative;
 }
-
+@media (max-width: 768px) {
 .gift-banner__content {
     position: relative;
     text-align: center;
@@ -3783,4 +3783,4 @@ details-disclosure > details {
     left: 0;
     top: 0;
 }
-
+}
