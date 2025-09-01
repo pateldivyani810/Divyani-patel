@@ -6,10 +6,14 @@
     <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
       {{ section.settings.button_label }}
     </a>
-
-    <!-- Mobile Toggle -->
-    <button class="gift-guide-header__toggle" aria-label="Toggle Menu">☰</button>
   </div>
+</section>
+<div class="gift-guide-banner__container alignment-{{ section.settings.content_alignment }}">
+  <h2 class="gift-guide-banner__heading">{{ section.settings.heading }}</h2>
+  <p class="gift-guide-banner__subheading">{{ section.settings.subheading }}</p>
+  <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+    {{ section.settings.button_label }}
+  </a>
 
   <!-- Mobile Dropdown -->
   <div class="gift-guide-header__mobile-menu">
@@ -18,7 +22,29 @@
       {{ section.settings.button_label }}
     </a>
   </div>
-</section>
+  {%- comment -%} Mobile toggle button {%- endcomment -%}
+  <button
+    id="gift-toggle-{{ section.id }}"
+    class="gift-guide-banner__toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="gift-menu-{{ section.id }}"
+    aria-label="Toggle message"
+  >☰</button>
+</div>
+
+{%- comment -%} Mobile dropdown content {%- endcomment -%}
+<div
+  id="gift-menu-{{ section.id }}"
+  class="gift-guide-banner__mobile-menu"
+  hidden
+>
+  <p>{{ section.settings.subheading }}</p>
+  <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+    {{ section.settings.button_label }}
+  </a>
+</div>
+
 
 {% schema %}
 {
@@ -171,33 +197,73 @@
     to { opacity: 1; transform: translateY(0); }
   }
 }
+/* hidden by default; 'hidden' attribute is used for a11y */
+.gift-guide-banner__mobile-menu { padding: 1rem; text-align: center; background:#f9f9f9; border-top:1px solid #eee; }
+.gift-guide-banner__mobile-menu.show { animation: slideDown .25s ease-out; }
+@keyframes slideDown { from {opacity:0; transform:translateY(-6px);} to {opacity:1; transform:translateY(0);} }
+
+@media (min-width: 769px){
+  /* desktop never shows mobile menu */
+  #shopify-section-{{ section.id }} .gift-guide-banner__mobile-menu { display:none !important; }
+  #shopify-section-{{ section.id }} .gift-guide-banner__toggle { display:none !important; }
+}
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.querySelector(".gift-guide-banner__toggle");
-    const mobileMenu = document.querySelector(".gift-guide-banner__mobile-menu");
+(function(){
+  'use strict';
 
-    if (!toggleBtn || !mobileMenu) return;
+  // Initialize one specific section instance
+  function initGiftBanner(sectionEl){
+    if (!sectionEl) return;
 
-    toggleBtn.addEventListener("click", () => {
-      // Toggle "show" class for open/close
-      mobileMenu.classList.toggle("show");
+    // guard against double-binding when Theme Editor re-renders
+    if (sectionEl.__giftBannerBound) return;
+    sectionEl.__giftBannerBound = true;
 
-      // Update aria-expanded for accessibility
-      const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
-      toggleBtn.setAttribute("aria-expanded", !expanded);
-    });
+    const toggle = sectionEl.querySelector('#gift-toggle-{{ section.id }}');
+    const menu   = sectionEl.querySelector('#gift-menu-{{ section.id }}');
+    if (!toggle || !menu) return;
 
-    // Optional: Close menu when clicking outside
-    document.addEventListener("click", (event) => {
-      if (!mobileMenu.contains(event.target) && !toggleBtn.contains(event.target)) {
-        mobileMenu.classList.remove("show");
-        toggleBtn.setAttribute("aria-expanded", "false");
+    function setOpen(open){
+      if (open){
+        menu.removeAttribute('hidden');
+        menu.classList.add('show');
+      } else {
+        menu.setAttribute('hidden', '');
+        menu.classList.remove('show');
       }
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    // Toggle click
+    toggle.addEventListener('click', function(){
+      const open = menu.hasAttribute('hidden');
+      setOpen(open);
     });
+
+    // Click outside to close
+    document.addEventListener('click', function(e){
+      if (!sectionEl.contains(e.target)) setOpen(false);
+    });
+
+    // ESC to close
+    sectionEl.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  // Find this section wrapper (Shopify wraps sections with #shopify-section-<id>)
+  var sectionWrapper = document.getElementById('shopify-section-{{ section.id }}') || document.currentScript.closest('section');
+  if (sectionWrapper) initGiftBanner(sectionWrapper);
+
+  // Re-init when the Theme Editor reloads this section
+  document.addEventListener('shopify:section:load', function(evt){
+    if (evt.detail && evt.detail.sectionId === '{{ section.id }}'){
+      var el = document.getElementById('shopify-section-{{ section.id }}');
+      initGiftBanner(el);
+    }
   });
+})();
 </script>
-
-
 
