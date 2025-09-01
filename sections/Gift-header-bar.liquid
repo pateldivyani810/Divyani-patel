@@ -1,6 +1,15 @@
 <section class="gift-guide-header" style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
 >
   <div class="gift-guide-header__container alignment-{{ section.settings.content_alignment }}">
+    {%- comment -%} Mobile toggle button {%- endcomment -%}
+  <button
+    id="gift-toggle-{{ section.id }}"
+    class="gift-guide-banner__toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="gift-menu-{{ section.id }}"
+    aria-label="Toggle message"
+  >☰</button>
     <h2 class="gift-guide-header__heading">{{ section.settings.heading }}</h2>
     <p class="gift-guide-header__subheading">{{ section.settings.subheading }}</p>
     <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
@@ -14,15 +23,6 @@
       {{ section.settings.button_label }}
     </a>
   </div>
-  {%- comment -%} Mobile toggle button {%- endcomment -%}
-  <button
-    id="gift-toggle-{{ section.id }}"
-    class="gift-guide-banner__toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="gift-menu-{{ section.id }}"
-    aria-label="Toggle message"
-  >☰</button>
 </div>
 
 {%- comment -%} Mobile dropdown content {%- endcomment -%}
