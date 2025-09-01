@@ -1,50 +1,41 @@
 <section class="gift-guide-header" style="background: {{ section.settings.background_color }} {% if section.settings.background_image != blank %}url('{{ section.settings.background_image | image_url: width: 1600 }}') no-repeat center/cover{% endif %};"
 >
-  <div class="gift-guide-header__container alignment-{{ section.settings.content_alignment }}">
-    <h2 class="gift-guide-header__heading">{{ section.settings.heading }}</h2>
-    <p class="gift-guide-header__subheading">{{ section.settings.subheading }}</p>
-    <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
+  <div class="gift-guide-banner__container alignment-{{ section.settings.content_alignment }}">
+    <h2 class="gift-guide-banner__heading">{{ section.settings.heading }}</h2>
+    <p class="gift-guide-banner__subheading">{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
+      {{ section.settings.button_label }}
+    </a>
+
+    <!-- Mobile Dropdown -->
+    <div class="gift-guide-header__mobile-menu">
+      <p>{{ section.settings.subheading }}</p>
+      <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+    {%- comment -%} Mobile toggle button {%- endcomment -%}
+    <button
+      id="gift-toggle-{{ section.id }}"
+      class="gift-guide-banner__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="gift-menu-{{ section.id }}"
+      aria-label="Toggle message"
+    >☰</button>
+  </div>
+  {%- comment -%} Mobile dropdown content {%- endcomment -%}
+  <div
+    id="gift-menu-{{ section.id }}"
+    class="gift-guide-banner__mobile-menu"
+    hidden
+  >
+    <p>{{ section.settings.subheading }}</p>
+    <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
       {{ section.settings.button_label }}
     </a>
   </div>
 </section>
-<div class="gift-guide-banner__container alignment-{{ section.settings.content_alignment }}">
-  <h2 class="gift-guide-banner__heading">{{ section.settings.heading }}</h2>
-  <p class="gift-guide-banner__subheading">{{ section.settings.subheading }}</p>
-  <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
-    {{ section.settings.button_label }}
-  </a>
-
-  <!-- Mobile Dropdown -->
-  <div class="gift-guide-header__mobile-menu">
-    <p>{{ section.settings.subheading }}</p>
-    <a href="{{ section.settings.button_link }}" class="gift-guide-header__btn">
-      {{ section.settings.button_label }}
-    </a>
-  </div>
-  {%- comment -%} Mobile toggle button {%- endcomment -%}
-  <button
-    id="gift-toggle-{{ section.id }}"
-    class="gift-guide-banner__toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="gift-menu-{{ section.id }}"
-    aria-label="Toggle message"
-  >☰</button>
-</div>
-
-{%- comment -%} Mobile dropdown content {%- endcomment -%}
-<div
-  id="gift-menu-{{ section.id }}"
-  class="gift-guide-banner__mobile-menu"
-  hidden
->
-  <p>{{ section.settings.subheading }}</p>
-  <a href="{{ section.settings.button_link }}" class="gift-guide-banner__btn">
-    {{ section.settings.button_label }}
-  </a>
-</div>
-
 
 {% schema %}
 {
