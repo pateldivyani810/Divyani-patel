@@ -1,5 +1,4 @@
-<section class="gift-banner-header">
-  <div class="gift-banner">
+<section class="gift-banner">
     <div class="gift-banner__overlay">
       <div class="container">
         <div class="gift-banner__content gift-banner__content--{{ section.settings.content_alignment }}">
@@ -22,11 +21,10 @@
     </div>
     <div class="overlay-banner" style="background-image: url({{ section.settings.banner_image | img_url: '1920x' }});">
     </div>
-  </div>
+  </section>
   <div class="gift-banner__bottom">
      {{ section.settings.bottom_text }}
   </div>
-</section>
 {% schema %}
 {
   "name": "Gift Guide Banner",
