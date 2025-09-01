@@ -3595,6 +3595,101 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+/* Gift header css start */
+.header-bar {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  font-family: Arial, sans-serif;
+}
+
+.header-bar__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-bar__logo a {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+}
+
+.header-bar__tagline {
+  font-size: 0.95rem;
+  color: #333;
+  flex: 1;
+  text-align: center;
+}
+
+.header-bar__cta .header-bar__btn {
+  background: #ffeb3b;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.header-bar__cta .header-bar__btn:hover {
+  background: #fdd835;
+}
+
+.header-bar__toggle {
+  display: none;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 📱 Mobile styles */
+@media (max-width: 768px) {
+  .header-bar__tagline,
+  .header-bar__cta {
+    display: none; /* hide center + button */
+  }
+
+  .header-bar__toggle {
+    display: block; /* show hamburger */
+  }
+
+  .header-bar__container {
+    justify-content: space-between;
+  }
+
+  .header-bar__mobile-menu {
+    display: none;
+    background: #f9f9f9;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+
+  .header-bar__mobile-menu p {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .header-bar__mobile-menu .header-bar__btn {
+    display: inline-block;
+    background: #ffeb3b;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .header-bar__mobile-menu.show {
+    display: block;
+  }
+}
 
 /* custom css for gift banner section */
 .gift-banner-header .container{
