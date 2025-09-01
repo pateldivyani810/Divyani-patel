@@ -8,8 +8,6 @@
       </a>
   </div>
   <div class="gift-banner">
-    <div class="overlay-banner" style="background-image: url({{ section.settings.banner_image | img_url: '1920x' }});">
-    </div>
     <div class="gift-banner__overlay">
       <div class="container">
         <div class="gift-banner__content gift-banner__content--{{ section.settings.content_alignment }}">
@@ -29,6 +27,8 @@
             {% endif %}
         </div>
       </div>
+    </div>
+    <div class="overlay-banner" style="background-image: url({{ section.settings.banner_image | img_url: '1920x' }});">
     </div>
   </div>
   <div class="gift-banner__bottom">
