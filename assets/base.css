@@ -3738,13 +3738,6 @@ details-disclosure > details {
     background-repeat: no-repeat;
     background-size: cover;
 }
-/* .gift-banner__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-} */
 .gift-banner__content {
   position: absolute;
   color: #000;
@@ -3783,5 +3776,11 @@ details-disclosure > details {
     position: relative;
 }
 
-
+.gift-banner__content {
+    position: relative;
+    text-align: center;
+    max-width: 100%;
+    left: 0;
+    top: 0;
+}
 
