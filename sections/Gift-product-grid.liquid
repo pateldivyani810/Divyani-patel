@@ -1,4 +1,4 @@
-<section id="product-grid-{{ section.id }}" class="product-grid">
+{% comment %} <section id="product-grid-{{ section.id }}" class="product-grid">
   <div class="container">
     {% if section.settings.heading != blank %}
       <h2 class="grid-heading">{{ section.settings.heading }}</h2>
@@ -134,4 +134,217 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %} {% endcomment %}
+
+Sure—here’s a self-contained example of a Shopify Liquid card that opens a modal popup when clicking a “+” icon. It uses plain HTML/Liquid with a bit of vanilla JavaScript and avoids external libraries so you can drop it into your theme (e.g., in a section or snippet).
+
+This example covers:
+- A product-like card structure
+- A clickable “+” icon to open a modal
+- An accessible modal with close controls
+- Basic CSS for layout (you can customize to fit your theme)
+
+ Save this as a snippet or paste into a section file, then include it where needed.
+
+```liquid
+{%- comment -%}
+  Card with + icon to open a popup modal
+  Customize: card title, image, price, and modal content as needed.
+{%- endcomment -%}
+
+<div class="card-with-popup" id="card-popup-{{ section.id }}">
+  <!-- Card Header / Image / Title -->
+  <div class="card-header">
+    {% if product.featured_image %}
+      <img src="{{ product.featured_image | img_url: '480x480' }}" alt="{{ product.title }}">
+    {% endif %}
+    <h3 class="card-title">{{ product.title }}</h3>
+  </div>
+
+  <div class="card-meta">
+    <span class="price">{{ product.price | money }}</span>
+  </div>
+
+  <!-- + Icon Button to Open Popup -->
+  <button class="open-popup-btn" aria-label="Open details for {{ product.title }}" data-popup-target="popup-{{ section.id }}">
+    <span class="icon-plus" aria-hidden="true">+</span>
+  </button>
+</div>
+
+<!-- Popup Modal (hidden by default) -->
+<div class="popup-modal" id="popup-{{ section.id }}" role="dialog" aria-modal="true" aria-labelledby="popup-title-{{ section.id }}" hidden>
+  <div class="popup-content">
+    <button class="close-popup-btn" aria-label="Close">×</button>
+
+    <h4 id="popup-title-{{ section.id }}" class="popup-title">{{ product.title }}</h4>
+
+    {% if product.description != blank %}
+      <div class="popup-body">
+        {{ product.description }}
+      </div>
+    {% else %}
+      <div class="popup-body">
+        Details coming soon.
+      </div>
+    {% endif %}
+
+    <div class="popup-actions">
+      <a href="{{ product.url }}" class="btn btn-primary">View Product</a>
+      <button class="btn" data-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Inline Script: simple show/hide behavior for this card -->
+<script>
+  (function() {
+    // Ensure script runs after DOM is ready
+    function ready(fn) { if (document.readyState !== 'loading'){ fn(); } else { document.addEventListener('DOMContentLoaded', fn); } }
+
+    ready(function() {
+      // Elements
+      var card = document.getElementById('card-popup-{{ section.id }}');
+      var openBtn = card ? card.querySelector('.open-popup-btn') : null;
+      var popupId = openBtn ? openBtn.getAttribute('data-popup-target') : null;
+      var modal = popupId ? document.getElementById('popup-' + popupId.split('-')[1]) : null;
+      
+      // If elements exist, wire up
+      if (openBtn && modal) {
+        // Open
+        openBtn.addEventListener('click', function() {
+          modal.hidden = false;
+          document.body.style.overflow = 'hidden';
+        });
+
+        // Close via close button
+        var closeBtn = modal.querySelector('.close-popup-btn');
+        var closeBtn2 = modal.querySelector('[data-close]');
+        [closeBtn, closeBtn2].forEach(function(btn){
+          if (btn) {
+            btn.addEventListener('click', function() {
+              modal.hidden = true;
+              document.body.style.overflow = '';
+            });
+          }
+        });
+
+        // Close on outside click
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.hidden = true;
+            document.body.style.overflow = '';
+          }
+        });
+
+        // Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && !modal.hidden) {
+            modal.hidden = true;
+            document.body.style.overflow = '';
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+<!-- Minimal CSS (adapt to your theme) -->
+<style>
+  .card-with-popup {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    width: 320px;
+    position: relative;
+    background: #fff;
+  }
+  .card-header {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .card-header img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 6px;
+  }
+  .card-title {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .open-popup-btn {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: #111;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .icon-plus {
+    display: inline-block;
+    line-height: 1;
+  }
+
+  /* Popup modal styles */
+  .popup-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: grid;
+    place-items: center;
+    z-index: 9999;
+  }
+  .popup-content {
+    background: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 520px;
+    padding: 20px;
+    position: relative;
+  }
+  .close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .popup-title {
+    margin-top: 0;
+  }
+  .popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  /* Basic buttons (adjust to theme) */
+  .btn {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: #0a6cff;
+    color: #fff;
+    border: none;
+  }
+</style>
+
