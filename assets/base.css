@@ -3690,4 +3690,7 @@ details-disclosure > details {
     left: 0;
     top: 0;
 }
+a.gift-banner__button.desktop_view {
+    display: none;
+}
 }
