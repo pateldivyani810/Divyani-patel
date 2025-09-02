@@ -3696,3 +3696,13 @@ a.gift-banner__button.desktop_view {
 .overlay-banner {
   min-height: 264px;
 }
+.banner_mobile_view_btn {
+    position: absolute;
+    top: auto;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    display: inline-table;
+    margin: auto;
+}
+}
