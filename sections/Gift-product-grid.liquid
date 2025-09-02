@@ -1,0 +1,137 @@
+<section id="product-grid-{{ section.id }}" class="product-grid">
+  <div class="container">
+    {% if section.settings.heading != blank %}
+      <h2 class="grid-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="grid">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        <div class="grid-item" {{ block.shopify_attributes }}>
+          {% if product %}
+            <a href="{{ product.url }}" class="product-card">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | img_url: '400x' }}" alt="{{ product.featured_image.alt | escape }}">
+                {% endif %}
+              </div>
+              <div class="product-info">
+                <h3>{{ product.title }}</h3>
+                {% if product.price %}
+                  <p>{{ product.price | money }}</p>
+                {% endif %}
+              </div>
+            </a>
+          {% else %}
+            <div class="product-card placeholder">
+              <p>Select a product</p>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <style>
+    .product-grid .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .product-grid .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* Tablet */
+    @media (max-width: 991px) {
+      .product-grid .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .product-grid .grid {
+        grid-template-columns: repeat(2, 1fr); /* ✅ 2 products per row */
+      }
+    }
+
+    .product-card {
+      display: block;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      background: #fff;
+      transition: box-shadow .2s ease;
+      height: 100%;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,.06);
+    }
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .product-card h3 {
+      margin: 12px 0 4px;
+      font-size: 1rem;
+    }
+    .product-card p {
+      margin: 0;
+      font-weight: 600;
+    }
+    .product-card.placeholder {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fafafa;
+      color:#888;
+    }
+  </style>
+</section>
+
+{% schema %}
+{
+  "name": "Product Grid (6 items)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select product"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "6 Product Grid",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
