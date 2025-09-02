@@ -3693,4 +3693,6 @@ details-disclosure > details {
 a.gift-banner__button.desktop_view {
     display: none;
 }
+.overlay-banner {
+  min-height: 264px;
 }
