@@ -3630,10 +3630,13 @@ details-disclosure > details {
   transform: scale(1.05);
 }
 .gift-banner__bottom {
-  padding:10px 0;
-  font-size: 12px;
-  color: #333;
+  padding: 10px 0;
+  font-size: 20px;
+  color: #000;
   text-transform: uppercase;
+  text-align: center;
+  background-color: #F5F5F5;
+  font-weight: 500;
 }
 .overlay-banner {
     background-position: center;
