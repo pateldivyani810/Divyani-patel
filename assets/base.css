@@ -3689,6 +3689,10 @@ details-disclosure > details {
     display: none;
 }
 @media (max-width: 768px) {
+  .gift-banner__bottom {
+    padding: 10px 0;
+    font-size: 13px;
+  }
 .gift-banner__content {
     position: relative;
     text-align: center;
