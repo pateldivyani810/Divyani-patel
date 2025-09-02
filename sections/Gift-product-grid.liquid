@@ -2,29 +2,32 @@
   {% for block in section.blocks %}
     {% assign product = all_products[block.settings.product] %}
     {% if product %}
-      <div class="product-card" data-product-handle="{{ product.handle }}">
+      <div class="product-card">
         <img src="{{ product.featured_image | img_url: '600x600' }}" alt="{{ product.title }}">
-        <button class="quick-view-btn">+</button>
+        <button class="quick-view-btn" data-handle="{{ product.handle }}">+</button>
       </div>
     {% endif %}
   {% endfor %}
 </div>
 
-<!-- Popup -->
+<!-- Popup Modal -->
 <div id="product-popup" class="popup hidden">
-  <div class="popup-content">
+  <div class="popup-inner" id="popup-inner">
     <span class="popup-close">&times;</span>
-    <div class="popup-body">
-      <h2 id="popup-title"></h2>
+    <div class="popup-content">
+      <img id="popup-image" src="{{ product.featured_image | img_url: '200x200' }}" alt="{{ product.title }}">
+      <h3 id="popup-title"></h3>
       <p id="popup-price"></p>
       <p id="popup-description"></p>
+
       <form id="popup-form">
         <select id="popup-variants"></select>
-        <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        <button type="submit" class="add-to-cart-btn">ADD TO CART →</button>
       </form>
     </div>
   </div>
 </div>
+
 {% schema %}
 {
   "name": "Product Grid with Popup",
