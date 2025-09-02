@@ -24,9 +24,63 @@
         "content_alignment": "bottom-left",
         "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
+    },
+    "gift_product_grid_TimjcR": {
+      "type": "Gift-product-grid",
+      "blocks": {
+        "product_aiFkMk": {
+          "type": "product",
+          "settings": {
+            "product": "black-leather-bag"
+          }
+        },
+        "product_eRyUrw": {
+          "type": "product",
+          "settings": {
+            "product": "blue-silk-tuxedo"
+          }
+        },
+        "product_AYNi6W": {
+          "type": "product",
+          "settings": {
+            "product": "chequered-red-shirt"
+          }
+        },
+        "product_qFqiFP": {
+          "type": "product",
+          "settings": {
+            "product": "classic-leather-jacket"
+          }
+        },
+        "product_3HBfYU": {
+          "type": "product",
+          "settings": {
+            "product": "classic-varsity-top"
+          }
+        },
+        "product_nt3HdG": {
+          "type": "product",
+          "settings": {
+            "product": "dark-denim-top"
+          }
+        }
+      },
+      "block_order": [
+        "product_aiFkMk",
+        "product_eRyUrw",
+        "product_AYNi6W",
+        "product_qFqiFP",
+        "product_3HBfYU",
+        "product_nt3HdG"
+      ],
+      "name": "Gift Product Grid",
+      "settings": {
+        "heading": "Featured Products"
+      }
     }
   },
   "order": [
-    "gift_guide_header_beRDNR"
+    "gift_guide_header_beRDNR",
+    "gift_product_grid_TimjcR"
   ]
 }
