@@ -3596,8 +3596,120 @@ details-disclosure > details {
   }
 }
 
-/* Divyani css start */
 
+/* Gift header css start */
+
+.gift-guide-header {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  font-family: Arial, sans-serif;
+}
+.gift-guide-header__mobile-menu {
+    display: none;
+}
+.gift-guide-header__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  background-color: #F5F5F5;
+  padding: 10px 15px;  
+}
+.gift-guide-header__heading {
+     margin: 0;
+    font-weight: 700;
+    color: #000;
+    font-size: 24px;
+}
+.gift-guide-header__subheading {
+  font-size: 16px;
+  margin: 0 1rem;
+  flex: 1;
+  text-align: center;
+}
+.gift-guide-header__btn ,.gift-guide-banner__btn{
+  background: #ffeb3b;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.gift-guide-header__btn:hover,.gift-guide-banner__btn:hover {
+   background: black;
+  color: white;
+  transform: scale(1.05);
+}
+.gift-guide-header__toggle {
+  display: none;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* alignment */
+.alignment-left { text-align: left; }
+.alignment-center { text-align: center; }
+.alignment-right { text-align: right; }
+
+@media (max-width: 768px) {
+  .gift-guide-header__subheading,
+  .gift-guide-header__btn {
+    display: none;
+  }
+  .gift-guide-header__toggle {
+    display: block;
+  }
+  .gift-guide-header__mobile-menu {
+    display: none;
+    background: #f9f9f9;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+  .gift-guide-header__mobile-menu.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+  }
+  .gift-guide-header__container {
+  justify-content: flex-end;
+  display: inline-flex;
+  width: 100%;
+}
+.gift-guide-banner__toggle {
+    border: none;
+    font-size: 20px;
+    background: none;
+    width: 5%;
+    text-align:left;
+}
+.gift-guide-header__heading {
+    width: 95%;
+}
+.gift-guide-header__mobile-menu.show p, .gift-guide-header__mobile-menu.show a {
+    display: block;
+}
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+/* hidden by default; 'hidden' attribute is used for a11y */
+.gift-guide-banner__mobile-menu { padding: 1rem; text-align: center; background:#f9f9f9; border-top:1px solid #eee; }
+.gift-guide-banner__mobile-menu.show { animation: slideDown .25s ease-out; }
+@keyframes slideDown { from {opacity:0; transform:translateY(-6px);} to {opacity:1; transform:translateY(0);} }
+
+@media (min-width: 769px){
+  /* desktop never shows mobile menu */
+  #shopify-section-{{ section.id }} .gift-guide-banner__mobile-menu { display:none !important; }
+  #shopify-section-{{ section.id }} .gift-guide-banner__toggle { display:none !important; }
+}
+/* gift header css end */
 /* custom css for gift banner section */
 .gift-banner-header .container{
   max-width:1600px;
