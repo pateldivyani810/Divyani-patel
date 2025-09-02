@@ -3595,8 +3595,10 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Divyani css start */
 /* Gift header css start */
-.header-bar {
+/* .header-bar {
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #eee;
@@ -3648,8 +3650,8 @@ details-disclosure > details {
   cursor: pointer;
 }
 
-/* 📱 Mobile styles */
-@media (max-width: 768px) {
+/* Responsive css */
+/* @media (max-width: 768px) {
   .header-bar__tagline,
   .header-bar__cta {
     display: none; /* hide center + button */
@@ -3688,8 +3690,8 @@ details-disclosure > details {
 
   .header-bar__mobile-menu.show {
     display: block;
-  }
-}
+  } */
+} */
 
 /* custom css for gift banner section */
 .gift-banner-header .container{
