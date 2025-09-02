@@ -1,3 +1,4 @@
+<section class="product-grid-section">
 <div class="product-grid">
   {% for block in section.blocks %}
     {% assign product = all_products[block.settings.product] %}
@@ -27,7 +28,7 @@
     </div>
   </div>
 </div>
-
+</section>
 {% schema %}
 {
   "name": "Product Grid with Popup",
