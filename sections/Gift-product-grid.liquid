@@ -16,7 +16,7 @@
     <!-- Popup Modal -->
 <div id="quick-view-popup" class="popup hidden">
   <div class="popup-inner">
-    <span class="popup-close">&times;</span>
+    <span class="popup-close" id="popup-close">&times;</span>
     <div class="popup-body">
       
       <!-- Image -->
@@ -24,19 +24,20 @@
         <img id="popup-image" src="" alt="" loading="lazy">
       </div>
 
-      <!-- Content -->
+      <!-- Details -->
       <div class="popup-details">
         <h3 id="popup-title" class="popup-title"></h3>
         <p id="popup-price" class="popup-price"></p>
         <p id="popup-description" class="popup-description"></p>
 
         <form id="popup-form" class="popup-form">
-          <!-- Variant Options -->
+          <!-- Color Options -->
           <div class="variant-group">
-            <label for="popup-color">Color</label>
+            <label>Color</label>
             <div id="popup-color" class="variant-options"></div>
           </div>
 
+          <!-- Size Options -->
           <div class="variant-group">
             <label for="popup-variants">Size</label>
             <select id="popup-variants"></select>
@@ -128,25 +129,17 @@ section.product-grid-section {
   z-index: 9999;
 }
 
-.popup.hidden {
-  display: none;
-}
+.popup.hidden { display: none; }
 
 /* Popup box */
 .popup-inner {
   background: #fff;
-  border-radius: 8px;
+  border-radius: 6px;
   max-width: 700px;
   width: 90%;
   padding: 20px;
   position: relative;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  box-shadow: 0 5px 25px rgba(0,0,0,0.25);
 }
 
 /* Close button */
@@ -205,7 +198,7 @@ section.product-grid-section {
 .variant-group label {
   display: block;
   font-size: 14px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   font-weight: 600;
 }
 
@@ -235,6 +228,7 @@ section.product-grid-section {
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #333;
+  background: #fff;
 }
 
 /* Add to Cart */
@@ -261,6 +255,7 @@ section.product-grid-section {
     flex-direction: column;
   }
 }
+
 .drag-icon {
   position: absolute;
   top: 10px;
@@ -284,7 +279,7 @@ section.product-grid-section {
 
 </style>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+{% comment %} document.addEventListener("DOMContentLoaded", () => {
   const popup = document.querySelector("#quick-view-popup");
   const closeBtn = document.querySelector(".popup-close"); // fixed
   const titleEl = document.querySelector("#popup-title");
@@ -366,5 +361,140 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Error adding to cart");
       });
   });
+}); {% endcomment %}
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.querySelector("#quick-view-popup");
+  const closeBtn = document.querySelector("#popup-close");
+  const titleEl = document.querySelector("#popup-title");
+  const priceEl = document.querySelector("#popup-price");
+  const descEl = document.querySelector("#popup-description");
+  const imgEl = document.querySelector("#popup-image");
+  const colorWrapper = document.querySelector("#popup-color");
+  const sizeSelect = document.querySelector("#popup-variants");
+  const addToCartBtn = document.querySelector("#popup-add-to-cart");
+
+  let currentProduct = null;
+  let selectedColor = null;
+  let selectedSize = null;
+
+  // ✅ Quick View button events
+  document.querySelectorAll(".quick-view-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const handle = btn.closest(".product-card").dataset.productHandle;
+
+      fetch(`/products/${handle}.js`)
+        .then(res => res.json())
+        .then(product => {
+          currentProduct = product;
+
+          // Fill popup details
+          titleEl.textContent = product.title;
+          priceEl.textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
+          descEl.innerHTML = product.description;
+          imgEl.src = product.featured_image;
+
+          // Reset selections
+          colorWrapper.innerHTML = "";
+          sizeSelect.innerHTML = "";
+          selectedColor = null;
+          selectedSize = null;
+
+          // Extract options
+          const colors = [...new Set(product.variants.map(v => v.option1))];
+          const sizes = [...new Set(product.variants.map(v => v.option2))];
+
+          // Render Color buttons
+          colors.forEach(color => {
+            const btnEl = document.createElement("button");
+            btnEl.type = "button";
+            btnEl.textContent = color;
+            btnEl.addEventListener("click", () => {
+              selectedColor = color;
+              document.querySelectorAll("#popup-color button").forEach(b => b.classList.remove("active"));
+              btnEl.classList.add("active");
+              filterSizes();
+            });
+            colorWrapper.appendChild(btnEl);
+          });
+
+          // Render Size dropdown
+          sizes.forEach(size => {
+            const opt = document.createElement("option");
+            opt.value = size;
+            opt.textContent = size;
+            sizeSelect.appendChild(opt);
+          });
+
+          sizeSelect.addEventListener("change", () => {
+            selectedSize = sizeSelect.value;
+          });
+
+          popup.classList.remove("hidden");
+        });
+    });
+  });
+
+  // ✅ Close popup
+  closeBtn.addEventListener("click", () => {
+    popup.classList.add("hidden");
+  });
+
+  // ✅ Add to Cart
+  addToCartBtn.addEventListener("click", () => {
+    if (!currentProduct) return;
+
+    const variant = currentProduct.variants.find(v => 
+      (!selectedColor || v.option1 === selectedColor) &&
+      (!selectedSize || v.option2 === selectedSize)
+    );
+
+    if (!variant) {
+      alert("Please select Color and Size");
+      return;
+    }
+
+    const formData = {
+      id: variant.id,
+      quantity: 1
+    };
+
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(`${currentProduct.title} added to cart!`);
+      popup.classList.add("hidden");
+    })
+    .catch(err => {
+      console.error("Add to cart error:", err);
+      alert("Error adding to cart");
+    });
+  });
+
+  // ✅ Filter sizes dynamically based on selected color
+  function filterSizes() {
+    if (!selectedColor) return;
+    sizeSelect.innerHTML = "";
+
+    const sizes = [
+      ...new Set(
+        currentProduct.variants
+          .filter(v => v.option1 === selectedColor)
+          .map(v => v.option2)
+      )
+    ];
+
+    sizes.forEach(size => {
+      const opt = document.createElement("option");
+      opt.value = size;
+      opt.textContent = size;
+      sizeSelect.appendChild(opt);
+    });
+  }
 });
+
 </script>
