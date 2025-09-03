@@ -1,5 +1,6 @@
 <section class="product-grid-section"> 
   <div class="container">
+    <h2 class="product-heading">{{ section.settings.heading }}</h2>
     <div class="product-grid">
       {% for block in section.blocks %}
         {% assign product = all_products[block.settings.product] %}
@@ -57,7 +58,13 @@
 {% schema %}
 {
   "name": "Product Grid with Popup",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    }
+  ],
   "blocks": [
     {
       "type": "product",
