@@ -18,11 +18,12 @@
       <div class="popup-inner" id="popup-inner">
         <span class="popup-close">&times;</span>
         <div class="popup-content">
-          <img id="popup-image" src="" alt="" width="200" height="200" loading="lazy">
-          <h3 id="popup-title"></h3>
-          <p id="popup-price"></p>
-          <p id="popup-description"></p>
-
+          <div class="top-content">
+            <img id="popup-image" src="" alt="" width="200" height="200" loading="lazy">
+            <h3 id="popup-title"></h3>
+            <p id="popup-price"></p>
+            <p id="popup-description"></p>
+          </div>
           <form id="popup-form">
             <label for="popup-variants">Choose Variant:</label>
             <select id="popup-variants"></select>
@@ -155,130 +156,6 @@ section.product-grid-section {
 
 </style>
 <script>
-{% comment %} document.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("product-popup");
-  const popupInner = document.getElementById("popup-inner");
-  const closeBtn = document.querySelector(".popup-close");
-
-  const popupImage = document.getElementById("popup-image");
-  const popupTitle = document.getElementById("popup-title");
-  const popupPrice = document.getElementById("popup-price");
-  const popupDescription = document.getElementById("popup-description");
-  const popupVariants = document.getElementById("popup-variants");
-  const popupForm = document.getElementById("popup-form");
-
-  // Open popup on quick view click
-  document.querySelectorAll(".quick-view-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      fetch(`/products/${btn.dataset.handle}.js`)
-        .then(res => res.json())
-        .then(product => {
-          popupImage.src = product.images[0];
-          popupTitle.textContent = product.title;
-          popupPrice.textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
-          popupDescription.textContent = product.description;
-
-          popupVariants.innerHTML = "";
-          product.variants.forEach(variant => {
-            let opt = document.createElement("option");
-            opt.value = variant.id;
-            opt.textContent = variant.title + " - " + (variant.price / 100).toFixed(2) + " " + Shopify.currency.active;
-            popupVariants.appendChild(opt);
-          });
-
-          popup.classList.remove("hidden");
-        });
-    });
-  });
-
-  // Close popup
-  closeBtn.addEventListener("click", () => popup.classList.add("hidden"));
-
-  // Draggable modal
-  let isDragging = false, offsetX, offsetY;
-  popupInner.addEventListener("mousedown", e => {
-    isDragging = true;
-    offsetX = e.clientX - popupInner.offsetLeft;
-    offsetY = e.clientY - popupInner.offsetTop;
-  });
-  document.addEventListener("mousemove", e => {
-    if (isDragging) {
-      popupInner.style.position = "absolute";
-      popupInner.style.left = (e.clientX - offsetX) + "px";
-      popupInner.style.top = (e.clientY - offsetY) + "px";
-    }
-  });
-  document.addEventListener("mouseup", () => isDragging = false);
-
-  // Add to Cart
-  popupForm.addEventListener("submit", e => {
-    e.preventDefault();
-    const variantId = popupVariants.value;
-
-    fetch("/cart/add.js", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: variantId, quantity: 1 })
-    })
-    .then(res => res.json())
-    .then(data => {
-      // Special condition: add "Soft Winter Jacket" if Black + Medium
-      if (data.variant_title.includes("Black") && data.variant_title.includes("Medium")) {
-        fetch("/products/soft-winter-jacket.js")
-          .then(res => res.json())
-          .then(prod => {
-            fetch("/cart/add.js", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ id: prod.variants[0].id, quantity: 1 })
-            });
-          });
-      }
-      alert("✅ Added to cart!");
-      popup.classList.add("hidden");
-    })
-    .catch(err => console.error(err));
-  });
-});
-document.querySelectorAll(".drag-icon").forEach(icon => {
-  // ✅ Click → open popup
-  icon.addEventListener("click", function(e) {
-    e.stopPropagation(); // stop card click
-    const productHandle = this.closest(".product-card").dataset.productHandle;
-
-    fetch(`/products/${productHandle}.js`)
-      .then(res => res.json())
-      .then(product => {
-        // Fill popup content
-        document.querySelector("#popup-title").textContent = product.title;
-        document.querySelector("#popup-price").textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
-        document.querySelector("#popup-description").textContent = product.description;
-        document.querySelector("#popup-image").src = product.featured_image;
-
-        // Variants
-        const variantSelect = document.querySelector("#popup-variants");
-        variantSelect.innerHTML = "";
-        product.variants.forEach(variant => {
-          const option = document.createElement("option");
-          option.value = variant.id;
-          option.textContent = variant.title;
-          variantSelect.appendChild(option);
-        });
-
-        document.querySelector("#popup").classList.remove("hidden");
-      });
-  });
-
-  // ✅ Drag behaviour
-  icon.addEventListener("dragstart", function(e) {
-    e.dataTransfer.setData("text/plain", "dragging-product");
-    this.style.opacity = "0.5";
-  });
-
-  icon.addEventListener("dragend", function() {
-    this.style.opacity = "1";
-  });
-}); {% endcomment %}
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.querySelector("#quick-view-popup");
   const closeBtn = document.querySelector(".popup-close"); // fixed
