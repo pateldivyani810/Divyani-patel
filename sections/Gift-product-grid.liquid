@@ -121,6 +121,32 @@ section.product-grid-section {
   font-size: 22px;
   cursor: pointer;
 }
+.product-card {
+  position: relative;
+  display: inline-block;
+}
+
+.drag-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;   /* 👈 show draggable hand */
+  user-select: none;
+}
+.drag-icon:active {
+  cursor: grabbing;
+}
+
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -208,4 +234,44 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(err => console.error(err));
   });
 });
+document.querySelectorAll(".drag-icon").forEach(icon => {
+  // ✅ Click → open popup
+  icon.addEventListener("click", function(e) {
+    e.stopPropagation(); // stop card click
+    const productHandle = this.closest(".product-card").dataset.productHandle;
+
+    fetch(`/products/${productHandle}.js`)
+      .then(res => res.json())
+      .then(product => {
+        // Fill popup content
+        document.querySelector("#popup-title").textContent = product.title;
+        document.querySelector("#popup-price").textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
+        document.querySelector("#popup-description").textContent = product.description;
+        document.querySelector("#popup-image").src = product.featured_image;
+
+        // Variants
+        const variantSelect = document.querySelector("#popup-variants");
+        variantSelect.innerHTML = "";
+        product.variants.forEach(variant => {
+          const option = document.createElement("option");
+          option.value = variant.id;
+          option.textContent = variant.title;
+          variantSelect.appendChild(option);
+        });
+
+        document.querySelector("#popup").classList.remove("hidden");
+      });
+  });
+
+  // ✅ Drag behaviour
+  icon.addEventListener("dragstart", function(e) {
+    e.dataTransfer.setData("text/plain", "dragging-product");
+    this.style.opacity = "0.5";
+  });
+
+  icon.addEventListener("dragend", function() {
+    this.style.opacity = "1";
+  });
+});
+
 </script>
