@@ -157,7 +157,7 @@ section.product-grid-section {
 
 </style>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+{% comment %} document.addEventListener("DOMContentLoaded", () => {
   const popup = document.getElementById("product-popup");
   const popupInner = document.getElementById("popup-inner");
   const closeBtn = document.querySelector(".popup-close");
@@ -279,6 +279,91 @@ document.querySelectorAll(".drag-icon").forEach(icon => {
 
   icon.addEventListener("dragend", function() {
     this.style.opacity = "1";
+  });
+}); {% endcomment %}
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.querySelector("#quick-view-popup");
+  const closeBtn = document.querySelector("#popup-close");
+  const titleEl = document.querySelector("#popup-title");
+  const priceEl = document.querySelector("#popup-price");
+  const descEl = document.querySelector("#popup-description");
+  const imgEl = document.querySelector("#popup-image");
+  const variantSelect = document.querySelector("#popup-variants");
+  const addToCartBtn = document.querySelector("#popup-add-to-cart");
+
+  let currentProduct = null;
+
+  // ✅ Quick View button events
+  document.querySelectorAll(".quick-view-btn").forEach(btn => {
+    // Open popup on click
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      const handle = btn.closest(".product-card").dataset.productHandle;
+
+      fetch(`/products/${handle}.js`)
+        .then(res => res.json())
+        .then(product => {
+          currentProduct = product;
+
+          // Fill popup details
+          titleEl.textContent = product.title;
+          priceEl.textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
+          descEl.innerHTML = product.description;
+          imgEl.src = product.featured_image;
+
+          // Variants
+          variantSelect.innerHTML = "";
+          product.variants.forEach(variant => {
+            const opt = document.createElement("option");
+            opt.value = variant.id;
+            opt.textContent = variant.title;
+            variantSelect.appendChild(opt);
+          });
+
+          popup.classList.remove("hidden");
+        });
+    });
+
+    // Drag start
+    btn.addEventListener("dragstart", e => {
+      e.dataTransfer.setData("text/plain", "quick-view");
+      btn.style.opacity = "0.5";
+    });
+
+    btn.addEventListener("dragend", e => {
+      btn.style.opacity = "1";
+    });
+  });
+
+  // ✅ Close popup
+  closeBtn.addEventListener("click", () => {
+    popup.classList.add("hidden");
+  });
+
+  // ✅ Add to Cart
+  addToCartBtn.addEventListener("click", () => {
+    if (!currentProduct) return;
+
+    const variantId = variantSelect.value;
+    const formData = {
+      id: variantId,
+      quantity: 1
+    };
+
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert(`${currentProduct.title} added to cart!`);
+      popup.classList.add("hidden");
+    })
+    .catch(err => {
+      console.error("Add to cart error:", err);
+      alert("Error adding to cart");
+    });
   });
 });
 
