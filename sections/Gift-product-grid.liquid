@@ -16,22 +16,22 @@
     <!-- Popup Modal -->
     <div id="quick-view-popup" class="popup hidden">
       <div class="popup-inner" id="popup-inner">
-      <span class="popup-close">&times;</span>
-      <div class="popup-content">
-        <img src="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }}"
-          alt="{{ product.featured_image.alt | escape }}" width="200" height="200" loading="lazy">
-        <h3 id="popup-title"></h3>
-        <p id="popup-price"></p>
-        <p id="popup-description"></p>
+        <span class="popup-close">&times;</span>
+        <div class="popup-content">
+          <img id="popup-image" src="" alt="" width="200" height="200" loading="lazy">
+          <h3 id="popup-title"></h3>
+          <p id="popup-price"></p>
+          <p id="popup-description"></p>
 
-        <form id="popup-form">
-          <label for="popup-variants">Choose Variant:</label>
-          <select id="popup-variants"></select>
-          <button id="popup-add-to-cart">ADD TO CART →</button>
-        </form>
-      </div>
+          <form id="popup-form">
+            <label for="popup-variants">Choose Variant:</label>
+            <select id="popup-variants"></select>
+            <button id="popup-add-to-cart" type="button">ADD TO CART →</button>
+          </form>
+        </div>
       </div>
     </div>
+
 </div>
 </section> 
 
