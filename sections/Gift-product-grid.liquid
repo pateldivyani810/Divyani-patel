@@ -14,25 +14,42 @@
     </div>
 
     <!-- Popup Modal -->
-    <div id="quick-view-popup" class="popup hidden">
-      <div class="popup-inner" id="popup-inner">
-        <span class="popup-close">&times;</span>
-        <div class="popup-content">
-          <div class="top-content">
-            <img id="popup-image" src="" alt="" width="200" height="200" loading="lazy">
-            <h3 id="popup-title"></h3>
-            <p id="popup-price"></p>
-            <p id="popup-description"></p>
+<div id="quick-view-popup" class="popup hidden">
+  <div class="popup-inner">
+    <span class="popup-close">&times;</span>
+    <div class="popup-body">
+      
+      <!-- Image -->
+      <div class="popup-image">
+        <img id="popup-image" src="" alt="" loading="lazy">
+      </div>
+
+      <!-- Content -->
+      <div class="popup-details">
+        <h3 id="popup-title" class="popup-title"></h3>
+        <p id="popup-price" class="popup-price"></p>
+        <p id="popup-description" class="popup-description"></p>
+
+        <form id="popup-form" class="popup-form">
+          <!-- Variant Options -->
+          <div class="variant-group">
+            <label for="popup-color">Color</label>
+            <div id="popup-color" class="variant-options"></div>
           </div>
-          <form id="popup-form">
-            <label for="popup-variants">Choose Variant:</label>
+
+          <div class="variant-group">
+            <label for="popup-variants">Size</label>
             <select id="popup-variants"></select>
-            <button id="popup-add-to-cart" type="button">ADD TO CART →</button>
-          </form>
-        </div>
+          </div>
+
+          <button id="popup-add-to-cart" type="button" class="popup-add-btn">
+            ADD TO CART →
+          </button>
+        </form>
       </div>
     </div>
-
+  </div>
+</div>
 </div>
 </section> 
 
@@ -99,40 +116,151 @@ section.product-grid-section {
   cursor: grabbing;
 }
 
-/* Popup */
+/* Popup overlay */
 .popup {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 999;
+  justify-content: center;
+  z-index: 9999;
 }
-.popup.hidden { display: none; }
 
+.popup.hidden {
+  display: none;
+}
+
+/* Popup box */
 .popup-inner {
   background: #fff;
-  padding: 20px;
-  max-width: 400px;
+  border-radius: 8px;
+  max-width: 700px;
   width: 90%;
+  padding: 20px;
   position: relative;
-  border-radius: 10px;
-  cursor: move; /* hint draggable */
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Close button */
 .popup-close {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 12px;
+  right: 12px;
   font-size: 22px;
   cursor: pointer;
 }
-.product-card {
-  position: relative;
-  display: inline-block;
+
+/* Layout */
+.popup-body {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
+.popup-image {
+  flex: 1 1 40%;
+}
+
+.popup-image img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.popup-details {
+  flex: 1 1 55%;
+}
+
+/* Text */
+.popup-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.popup-price {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.popup-description {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+/* Variants */
+.variant-group {
+  margin-bottom: 15px;
+}
+
+.variant-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.variant-options {
+  display: flex;
+  gap: 10px;
+}
+
+.variant-options button {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #333;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.variant-options button.active,
+.variant-options button:hover {
+  background: #000;
+  color: #fff;
+}
+
+#popup-variants {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+/* Add to Cart */
+.popup-add-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.popup-add-btn:hover {
+  background: #333;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .popup-body {
+    flex-direction: column;
+  }
+}
 .drag-icon {
   position: absolute;
   top: 10px;
