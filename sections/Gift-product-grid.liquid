@@ -4,13 +4,10 @@
       {% for block in section.blocks %}
         {% assign product = all_products[block.settings.product] %}
         {% if product %}
-          <div class="product-card">
+          <div class="product-card" data-product-handle="{{ block.settings.product.handle }}">
             <img src="{{ product.featured_image | image_url: width: 350, height: 350, crop: 'center' }}"
-        alt="{{ product.featured_image.alt | escape }}"
-        width="350"
-        height="350"
-        loading="lazy">
-            <button class="quick-view-btn" data-handle="{{ product.handle }}">+</button>
+                alt="{{ product.featured_image.alt | escape }}" width="350" height="350" loading="lazy">
+            <button class="drag-icon quick-view-btn" data-handle="{{ product.handle }}" draggable="true">+</button>
           </div>
         {% endif %}
       {% endfor %}
