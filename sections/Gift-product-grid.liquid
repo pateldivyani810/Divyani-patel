@@ -39,8 +39,8 @@
 
           <!-- Size Options -->
           <div class="variant-group">
-            <label for="popup-variants">Color</label>
-            <select id="popup-variants">Size</select>
+            <label for="popup-variants">Size</label>
+            <select id="popup-variants"></select>
           </div>
 
           <button id="popup-add-to-cart" type="button" class="popup-add-btn">
@@ -280,7 +280,7 @@ section.product-grid-section {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.querySelector("#quick-view-popup");
-  const closeBtn = document.querySelector(".popup-close");
+  const closeBtn = document.querySelector("#popup-close");
   const titleEl = document.querySelector("#popup-title");
   const priceEl = document.querySelector("#popup-price");
   const descEl = document.querySelector("#popup-description");
@@ -290,259 +290,127 @@ document.addEventListener("DOMContentLoaded", () => {
   const addToCartBtn = document.querySelector("#popup-add-to-cart");
 
   let currentProduct = null;
-  let colorIdx = null;
-  let sizeIdx = null;
   let selectedColor = null;
   let selectedSize = null;
 
-  // Helper to read variant option value in a robust way
-  function getVariantOption(variant, index) {
-    if (!variant) return null;
-    if (Array.isArray(variant.options) && variant.options[index] !== undefined) return variant.options[index];
-    const key = "option" + (index + 1);
-    if (variant[key] !== undefined) return variant[key];
-    return null;
-  }
-
-  // open popup for a product handle
-  function openPopupForProduct(handle) {
-    fetch(`/products/${handle}.js`)
-      .then(r => r.json())
-      .then(product => {
-        currentProduct = product;
-
-        // determine option indices
-        const optionNames = Array.isArray(product.options) ? product.options : [];
-        colorIdx = optionNames.findIndex(n => /^(color|colour)$/i.test(n));
-        sizeIdx = optionNames.findIndex(n => /^size$/i.test(n));
-
-        // fallback if not found: use first two options (if exist)
-        if (colorIdx === -1) colorIdx = optionNames.length > 0 ? 0 : null;
-        if (sizeIdx === -1) sizeIdx = optionNames.length > 1 ? 1 : null;
-
-        // default variant: first available or first overall
-        const defaultVariant = (product.variants.find(v => v.available) || product.variants[0]) || null;
-        selectedColor = colorIdx !== null ? getVariantOption(defaultVariant, colorIdx) : null;
-        selectedSize  = sizeIdx  !== null ? getVariantOption(defaultVariant, sizeIdx)  : null;
-
-        // fill title/desc/initial image/price
-        titleEl.textContent = product.title || "";
-        descEl.innerHTML = product.description || "";
-        // show price for defaultVariant
-        const initialVariant = defaultVariant;
-        priceEl.textContent = initialVariant ? formatPrice(initialVariant.price) : formatPrice(product.price);
-
-        // image
-        const fallbackImage = (product.featured_image || (product.images && product.images[0]) || "");
-        imgEl.src = (initialVariant && (initialVariant.featured_image || initialVariant.image)) || fallbackImage;
-
-        // build unique color and size lists (deduped)
-        const colors = colorIdx !== null
-          ? [...new Set(product.variants.map(v => getVariantOption(v, colorIdx)).filter(Boolean))]
-          : [];
-        const sizes  = sizeIdx !== null
-          ? [...new Set(product.variants.map(v => getVariantOption(v, sizeIdx)).filter(Boolean))]
-          : [];
-
-        // render color buttons
-        colorWrapper.innerHTML = "";
-        if (colors.length) {
-          colors.forEach(c => {
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "variant-color-btn";
-            b.textContent = c;
-            b.dataset.value = c;
-            if (c === selectedColor) b.classList.add("active");
-            b.addEventListener("click", () => {
-              selectedColor = c;
-              // mark active
-              document.querySelectorAll("#popup-color .variant-color-btn").forEach(x => x.classList.remove("active"));
-              b.classList.add("active");
-              // refresh sizes available for this color
-              renderSizesForSelectedColor();
-              updateSelectedVariantUI();
-            });
-            colorWrapper.appendChild(b);
-          });
-        }
-
-        // render sizes (initial)
-        sizeSelect.innerHTML = "";
-        if (sizes.length) {
-          sizes.forEach(s => {
-            const o = document.createElement("option");
-            o.value = s;
-            o.textContent = s;
-            sizeSelect.appendChild(o);
-          });
-        }
-
-        // set size select to selectedSize if present, else first available
-        if (selectedSize && Array.from(sizeSelect.options).some(o => o.value === selectedSize)) {
-          sizeSelect.value = selectedSize;
-        } else if (sizeSelect.options.length) {
-          selectedSize = sizeSelect.options[0].value;
-          sizeSelect.value = selectedSize;
-        } else {
-          selectedSize = null;
-        }
-
-        // listen for size changes
-        sizeSelect.onchange = () => {
-          selectedSize = sizeSelect.value;
-          // optionally update color buttons to mark which colors available for this size
-          highlightColorsForSelectedSize();
-          updateSelectedVariantUI();
-        };
-
-        // ensure colors reflect sizes availability initially
-        renderSizesForSelectedColor();
-        highlightColorsForSelectedSize();
-
-        // finally compute and show correct variant details
-        updateSelectedVariantUI();
-
-        popup.classList.remove("hidden");
-      })
-      .catch(err => {
-        console.error("Fetch product error:", err);
-      });
-  }
-
-  // Render sizes filtered by selectedColor (if color selected)
-  function renderSizesForSelectedColor() {
-    if (!currentProduct || sizeIdx === null) return;
-    const availableSizes = selectedColor
-      ? [...new Set(currentProduct.variants.filter(v => getVariantOption(v, colorIdx) === selectedColor).map(v => getVariantOption(v, sizeIdx)).filter(Boolean))]
-      : [...new Set(currentProduct.variants.map(v => getVariantOption(v, sizeIdx)).filter(Boolean))];
-
-    // repopulate sizeSelect
-    sizeSelect.innerHTML = "";
-    availableSizes.forEach(s => {
-      const o = document.createElement("option");
-      o.value = s;
-      o.textContent = s;
-      sizeSelect.appendChild(o);
-    });
-
-    // set selectedSize to previous if still exists, else first
-    if (selectedSize && Array.from(sizeSelect.options).some(o => o.value === selectedSize)) {
-      sizeSelect.value = selectedSize;
-    } else {
-      selectedSize = sizeSelect.options.length ? sizeSelect.options[0].value : null;
-      if (selectedSize) sizeSelect.value = selectedSize;
-    }
-  }
-
-  // Highlight color buttons that are available for currently selected size
-  function highlightColorsForSelectedSize() {
-    if (!currentProduct || colorIdx === null) return;
-    document.querySelectorAll("#popup-color .variant-color-btn").forEach(btn => {
-      const colorVal = btn.dataset.value;
-      const exists = currentProduct.variants.some(v => {
-        const cv = getVariantOption(v, colorIdx);
-        const sv = sizeIdx !== null ? getVariantOption(v, sizeIdx) : null;
-        return cv === colorVal && (selectedSize ? sv === selectedSize : true);
-      });
-      btn.disabled = !exists;
-      btn.style.opacity = exists ? "1" : "0.45";
-      if (!exists) btn.classList.remove("active");
-    });
-  }
-
-  // Find the variant matching current selections and update price + image
-  function updateSelectedVariantUI() {
-    if (!currentProduct) return;
-    const matched = currentProduct.variants.find(v => {
-      const cv = colorIdx !== null ? getVariantOption(v, colorIdx) : null;
-      const sv = sizeIdx !== null ? getVariantOption(v, sizeIdx) : null;
-      const colorMatch = colorIdx === null ? true : cv === selectedColor;
-      const sizeMatch  = sizeIdx  === null ? true : sv === selectedSize;
-      return colorMatch && sizeMatch;
-    });
-
-    if (matched) {
-      // price
-      priceEl.textContent = formatPrice(matched.price);
-      // image: variant may include featured_image or image
-      const imgUrl = matched.featured_image || matched.image || currentProduct.featured_image || (currentProduct.images && currentProduct.images[0]) || "";
-      if (imgUrl) imgEl.src = imgUrl;
-      // save chosen variant id on the add button for later
-      addToCartBtn.dataset.variantId = matched.id;
-    } else {
-      // no exact variant — show product-level defaults
-      priceEl.textContent = formatPrice(currentProduct.price);
-      imgEl.src = currentProduct.featured_image || (currentProduct.images && currentProduct.images[0]) || "";
-      addToCartBtn.dataset.variantId = "";
-    }
-  }
-
-  // currency formatting (simple)
-  function formatPrice(cents) {
-    // cents may be number or string; ensure numeric
-    const p = Number(cents) / 100;
-    // Use Shopify.currency.active if available, otherwise fallback to simple formatting
-    const currency = (window.Shopify && Shopify.currency && Shopify.currency.active) ? Shopify.currency.active : "";
-    return p.toFixed(2) + (currency ? " " + currency : "");
-  }
-
-  // attach click handlers on quick-view buttons
+  // Quick View button events
   document.querySelectorAll(".quick-view-btn").forEach(btn => {
     btn.addEventListener("click", e => {
       e.preventDefault();
-      e.stopPropagation();
-      const handle = btn.dataset.handle || btn.closest(".product-card")?.dataset.productHandle;
-      if (!handle) return;
-      openPopupForProduct(handle);
-    });
+      const handle = btn.closest(".product-card").dataset.productHandle;
 
-    // draggable visual behavior (keeps existing)
-    btn.addEventListener("dragstart", e => {
-      e.dataTransfer.setData("text/plain", "quick-view");
-      btn.style.opacity = "0.5";
-    });
-    btn.addEventListener("dragend", e => {
-      btn.style.opacity = "1";
+      fetch(`/products/${handle}.js`)
+        .then(res => res.json())
+        .then(product => {
+          currentProduct = product;
+
+          // Fill popup details
+          titleEl.textContent = product.title;
+          priceEl.textContent = (product.price / 100).toFixed(2) + " " + Shopify.currency.active;
+          descEl.innerHTML = product.description;
+          imgEl.src = product.featured_image;
+
+          // Reset selections
+          colorWrapper.innerHTML = "";
+          sizeSelect.innerHTML = "";
+          selectedColor = null;
+          selectedSize = null;
+
+          // Extract options
+          const colors = [...new Set(product.variants.map(v => v.option1))];
+          const sizes = [...new Set(product.variants.map(v => v.option2))];
+
+          // Render Color buttons
+          colors.forEach(color => {
+            const btnEl = document.createElement("button");
+            btnEl.type = "button";
+            btnEl.textContent = color;
+            btnEl.addEventListener("click", () => {
+              selectedColor = color;
+              document.querySelectorAll("#popup-color button").forEach(b => b.classList.remove("active"));
+              btnEl.classList.add("active");
+              filterSizes();
+            });
+            colorWrapper.appendChild(btnEl);
+          });
+
+          // Render Size dropdown
+          sizes.forEach(size => {
+            const opt = document.createElement("option");
+            opt.value = size;
+            opt.textContent = size;
+            sizeSelect.appendChild(opt);
+          });
+
+          sizeSelect.addEventListener("change", () => {
+            selectedSize = sizeSelect.value;
+          });
+
+          popup.classList.remove("hidden");
+        });
     });
   });
 
-  // close popup
-  if (closeBtn) closeBtn.addEventListener("click", () => popup.classList.add("hidden"));
-  // close when clicking outside inner
-  popup.addEventListener("click", (ev) => {
-    if (ev.target === popup) popup.classList.add("hidden");
+  // Close popup
+  closeBtn.addEventListener("click", () => {
+    popup.classList.add("hidden");
   });
 
-  // Add to cart handler
-  if (addToCartBtn) addToCartBtn.addEventListener("click", () => {
-    const variantId = addToCartBtn.dataset.variantId || sizeSelect.value || null;
-    if (!variantId) {
-      alert("Please select a valid variant.");
+  // Add to Cart
+  addToCartBtn.addEventListener("click", () => {
+    if (!currentProduct) return;
+
+    const variant = currentProduct.variants.find(v => 
+      (!selectedColor || v.option1 === selectedColor) &&
+      (!selectedSize || v.option2 === selectedSize)
+    );
+
+    if (!variant) {
+      alert("Please select Color and Size");
       return;
     }
 
-    const payload = { id: variantId, quantity: 1 };
+    const formData = {
+      id: variant.id,
+      quantity: 1
+    };
+
     fetch("/cart/add.js", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(formData)
     })
-    .then(r => r.json())
-    .then(added => {
-      // optional: special rule if needed
-      // if (added.variant_title && added.variant_title.includes("Black") && added.variant_title.includes("Medium")) { ... }
-
-      // simple success feedback
-      alert("Added to cart: " + (currentProduct ? currentProduct.title : ""));
+    .then(res => res.json())
+    .then(data => {
+      alert(`${currentProduct.title} added to cart!`);
       popup.classList.add("hidden");
-      // optionally update a cart count element here
     })
     .catch(err => {
-      console.error("Add to cart error", err);
+      console.error("Add to cart error:", err);
       alert("Error adding to cart");
     });
   });
-});
-</script>
 
+  // ✅ Filter sizes dynamically based on selected color
+  function filterSizes() {
+    if (!selectedColor) return;
+    sizeSelect.innerHTML = "";
+
+    const sizes = [
+      ...new Set(
+        currentProduct.variants
+          .filter(v => v.option1 === selectedColor)
+          .map(v => v.option2)
+      )
+    ];
+
+    sizes.forEach(size => {
+      const opt = document.createElement("option");
+      opt.value = size;
+      opt.textContent = size;
+      sizeSelect.appendChild(opt);
+    });
+  }
+});
+
+</script>
