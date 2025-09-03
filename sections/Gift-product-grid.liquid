@@ -1,42 +1,45 @@
-{% comment %} <section class="product-grid-section"> {% endcomment %}
-<div class="product-grid">
-  {% for block in section.blocks %}
-    {% assign product = all_products[block.settings.product] %}
-    {% if product %}
-      <div class="product-card">
-        <img src="{{ product.featured_image | image_url: width: 500, height: 500, crop: 'center' }}"
-     alt="{{ product.featured_image.alt | escape }}"
-     width="500"
-     height="500"
-     loading="lazy">
-        <button class="quick-view-btn" data-handle="{{ product.handle }}">+</button>
-      </div>
-    {% endif %}
-  {% endfor %}
-</div>
-
-<!-- Popup Modal -->
-<div id="product-popup" class="popup hidden">
-  <div class="popup-inner" id="popup-inner">
-    <span class="popup-close">&times;</span>
-    <div class="popup-content">
-      <img src="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }}"
-     alt="{{ product.featured_image.alt | escape }}"
-     width="500"
-     height="500"
-     loading="lazy">
-      <h3 id="popup-title"></h3>
-      <p id="popup-price"></p>
-      <p id="popup-description"></p>
-
-      <form id="popup-form">
-        <select id="popup-variants"></select>
-        <button type="submit" class="add-to-cart-btn">ADD TO CART →</button>
-      </form>
+<section class="product-grid-section"> 
+  <div class="container">
+    <div class="product-grid">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        {% if product %}
+          <div class="product-card">
+            <img src="{{ product.featured_image | image_url: width: 500, height: 500, crop: 'center' }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        width="500"
+        height="500"
+        loading="lazy">
+            <button class="quick-view-btn" data-handle="{{ product.handle }}">+</button>
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
-  </div>
+
+    <!-- Popup Modal -->
+    <div id="product-popup" class="popup hidden">
+      <div class="popup-inner" id="popup-inner">
+      <span class="popup-close">&times;</span>
+      <div class="popup-content">
+        <img src="{{ product.featured_image | image_url: width: 200, height: 200, crop: 'center' }}"
+      alt="{{ product.featured_image.alt | escape }}"
+      width="500"
+      height="500"
+      loading="lazy">
+        <h3 id="popup-title"></h3>
+        <p id="popup-price"></p>
+        <p id="popup-description"></p>
+
+        <form id="popup-form">
+          <select id="popup-variants"></select>
+          <button type="submit" class="add-to-cart-btn">ADD TO CART →</button>
+        </form>
+      </div>
+      </div>
+    </div>
 </div>
-{% comment %} </section> {% endcomment %}
+</section> 
+
 {% schema %}
 {
   "name": "Product Grid with Popup",
