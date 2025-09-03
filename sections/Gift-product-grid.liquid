@@ -5,7 +5,7 @@
         {% assign product = all_products[block.settings.product] %}
         {% if product %}
           <div class="product-card">
-            <img src="{{ product.featured_image | image_url: width: 500, height: 500, crop: 'center' }}"
+            <img src="{{ product.featured_image | image_url: width: 350, height: 350, crop: 'center' }}"
         alt="{{ product.featured_image.alt | escape }}"
         width="500"
         height="500"
