@@ -4047,6 +4047,9 @@ select#popup-size:before {
 #popup-size option:first-child {
     display: none;
 }
+form#popup-form label {
+    color: #000;
+}
 .variant-options option:not(first-child) {
     text-align: center;
 }
