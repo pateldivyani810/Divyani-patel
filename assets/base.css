@@ -3631,17 +3631,17 @@ details-disclosure > details {
   text-align: center;
 }
 .gift-guide-header__btn ,.gift-guide-banner__btn{
-  background: #ffeb3b;
+  background-color: #ffeb3b;
   padding: 10px 20px;
   font-weight: bold;
   text-decoration: none;
-  color: black;
+  color: #000;
   border-radius: 4px;
   transition: all 0.3s ease;
 }
 .gift-guide-header__btn:hover,.gift-guide-banner__btn:hover {
-   background: black;
-  color: white;
+   background-color: #000;
+  color: #fff;
   transform: scale(1.05);
 }
 .gift-guide-header__toggle {
@@ -3699,13 +3699,11 @@ details-disclosure > details {
     to { opacity: 1; transform: translateY(0); }
   }
 }
-/* hidden by default; 'hidden' attribute is used for a11y */
 .gift-guide-banner__mobile-menu { padding: 1rem; text-align: center; background:#f9f9f9; border-top:1px solid #eee; }
 .gift-guide-banner__mobile-menu.show { animation: slideDown .25s ease-out; }
 @keyframes slideDown { from {opacity:0; transform:translateY(-6px);} to {opacity:1; transform:translateY(0);} }
 
 @media (min-width: 769px){
-  /* desktop never shows mobile menu */
   #shopify-section-{{ section.id }} .gift-guide-banner__mobile-menu { display:none !important; }
   #shopify-section-{{ section.id }} .gift-guide-banner__toggle { display:none !important; }
 }
@@ -3829,7 +3827,7 @@ a.gift-banner__button.desktop_view {
     margin: auto;
 }
 }
-/* gift product grid section css  start*/
+/* gift product grid section css start*/
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -3881,9 +3879,7 @@ a.gift-banner__button.desktop_view {
   justify-content: center;
   z-index: 9999;
 }
-
 .popup.hidden { display: none; }
-
 /* Popup box */
 .popup-inner {
   background: #fff;
@@ -3894,8 +3890,6 @@ a.gift-banner__button.desktop_view {
   position: relative;
   box-shadow: 0 5px 25px rgba(0,0,0,0.25);
 }
-
-/* Close button */
 .popup-close {
   position: absolute;
   top: 12px;
@@ -3903,8 +3897,6 @@ a.gift-banner__button.desktop_view {
   font-size: 22px;
   cursor: pointer;
 }
-
-/* Layout */
 .popup-body {
     display: flex;
     gap: 15px;
@@ -3919,17 +3911,13 @@ a.gift-banner__button.desktop_view {
 .popup-image {
   flex: 1 1 40%;
 }
-
 .popup-image img {
   width: 100%;
   height:190px;
 }
-
 .popup-details {
   flex: 1 1 55%;
 }
-
-/* Text */
 .popup-title {
   font-size: 20px;
   font-weight: 700;
@@ -3976,25 +3964,22 @@ label.popup-size {
 /* Style the size dropdown */
 #popup-size {
   width: 100%;
-  padding: 10px 40px 10px 12px; /* right padding for arrow */
+  padding: 10px 40px 10px 12px;
   font-size: 14px;
   border: 1px solid #ccc;
   background-color: #fff;
   color: #333;
   margin-bottom: 30px;
-
   /* Remove default arrow */
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
   /* Add custom arrow (▼) */
   background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
 }
-
 /* On focus */
 #popup-size:focus {
   border-color: #000;
@@ -4058,6 +4043,7 @@ label.popup-size {
 .variant-options option:hover {
     background-color: #000;
 }
+
 /* Mobile responsive */
 @media(max-width: 768px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -4067,6 +4053,7 @@ label.popup-size {
     width: 15px;
     height: 15px;
     font-size: 12px;
+}
 }
 @media (max-width: 480px) {
 .popup-title {
