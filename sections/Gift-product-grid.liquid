@@ -209,38 +209,10 @@
   margin-bottom: 6px;
   font-weight: 600;
 }
-
-{% comment %} .variant-options {
-  display: flex;
-  gap: 10px;
-} {% endcomment %}
 label.popup-size {
     display: block;
     color: #000;
 }
-.variant-options button {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #333;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-{% comment %} 
-.variant-options button.active,
-.variant-options button:hover {
-  background: #000;
-  color: #fff;
-}
-
-#popup-variants {
-  width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #333;
-  background: #fff;
-} {% endcomment %}
 #popup-color {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -264,6 +236,43 @@ label.popup-size {
   border-radius: 4px;
   background: #fff;
 }
+/* Style the size dropdown */
+#popup-size {
+  width: 100%;
+  padding: 10px 40px 10px 12px; /* right padding for arrow */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+
+  /* Remove default arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Add custom arrow (▼) */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+/* On focus */
+#popup-size:focus {
+  border-color: #000;
+  outline: none;
+}
+
+/* Dropdown wrapper to control width */
+.popup-details label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #111;
+}
 
 /* Add to Cart */
 .popup-add-btn {
@@ -278,7 +287,6 @@ label.popup-size {
   border-radius: 4px;
   transition: background 0.2s ease;
 }
-
 .popup-add-btn:hover {
   background: #333;
 }
