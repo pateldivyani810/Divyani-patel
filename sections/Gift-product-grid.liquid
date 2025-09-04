@@ -370,6 +370,57 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
+<style>
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.select-wrapper select {
+  width: 100%;
+  padding: 10px 45px 10px 12px; /* extra right space for line + arrow */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+
+  /* Remove system arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Divider line */
+.select-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  right: 32px;          /* adjust so it sits before the arrow */
+  width: 1px;
+  background: #ccc;
+}
+
+/* Custom arrow */
+.select-wrapper::after {
+  content: "▼";
+  font-size: 12px;
+  color: #000;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* Focus state */
+.select-wrapper select:focus {
+  border-color: #000;
+  outline: none;
+}
+</style>
 
 
 
