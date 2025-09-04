@@ -3997,6 +3997,11 @@ select#popup-size:before {
   border-color: #000;
   outline: none;
 }
+.variant-options option:focus {
+    background-color: #000;
+    color: #fff;
+}
+
 /* Dropdown wrapper to control width */
 .popup-details label {
   display: block;
