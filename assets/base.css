@@ -3981,7 +3981,7 @@ label.popup-size {
   background-size: 16px;
 }
 select#popup-size:before {
-    content: "";
+    content: "|";
     position: absolute;
     top: 25%;
     bottom: 25%;
@@ -3989,6 +3989,7 @@ select#popup-size:before {
     width: 1px;
     background: #ccc;
     z-index: 2;
+    display:block;
 }
 /* On focus */
 #popup-size:focus {
