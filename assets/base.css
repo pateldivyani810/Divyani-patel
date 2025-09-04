@@ -3964,7 +3964,7 @@ label.popup-size {
 /* Style the size dropdown */
 #popup-size {
   width: 100%;
-  padding: 10px 40px 10px 12px;
+  padding: 15px 40px 15px 12px;
   font-size: 14px;
   border: 1px solid #ccc;
   background-color: #fff;
