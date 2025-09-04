@@ -3596,7 +3596,7 @@ details-disclosure > details {
   }
 }
 
-
+/* Divyani custom css start  */
 /* Gift header css start */
 
 .gift-guide-header {
@@ -3710,7 +3710,8 @@ details-disclosure > details {
   #shopify-section-{{ section.id }} .gift-guide-banner__toggle { display:none !important; }
 }
 /* gift header css end */
-/* custom css for gift banner section */
+
+/* gift banner section css */
 .gift-banner-header .container{
   max-width:1600px;
   margin:0 auto;
@@ -3828,7 +3829,7 @@ a.gift-banner__button.desktop_view {
     margin: auto;
 }
 }
-/* gift product grid css */
+/* gift product grid section css  start*/
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
