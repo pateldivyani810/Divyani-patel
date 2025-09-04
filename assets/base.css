@@ -4074,6 +4074,10 @@ form#popup-form label {
     height: 15px;
     font-size: 12px;
 }
+.gift-banner__heading {
+    font-size: 30px;
+    padding-top: 35px;
+}
 }
 @media (max-width: 480px) {
 .popup-title {
