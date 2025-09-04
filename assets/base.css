@@ -4079,4 +4079,7 @@ form#popup-form label {
 .popup-title {
     font-size: 15px;
 }
+.popup-description {
+    font-size: 13px;
+}
 }
