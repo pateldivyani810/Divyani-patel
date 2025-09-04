@@ -36,9 +36,11 @@
       </div>
       <form id="popup-form" class="popup-form">
          <label>Size</label>
-            <div id="popup-size"></div>
-            <label>Color</label>
-            <select id="popup-color"></select>         
+             <label>Color</label>
+    <div id="popup-color"></div>
+
+    <label>Size</label>
+    <select id="popup-size"></select>       
             <button id="popup-add-to-cart" type="button" class="popup-add-btn">
                 ADD TO CART →
             </button>
@@ -323,13 +325,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const priceEl = document.querySelector("#popup-price");
   const descEl  = document.querySelector("#popup-description");
   const imgEl   = document.querySelector("#popup-image");
-  const sizeWrap = document.querySelector("#popup-size");   // size buttons
-  const colorSelect = document.querySelector("#popup-color"); // color dropdown
+  const colorWrap = document.querySelector("#popup-color");   // color buttons
+  const sizeSelect = document.querySelector("#popup-size");   // size dropdown
   const addBtn  = document.querySelector("#popup-add-to-cart");
 
   let product = null;
-  let selectedSize = null;
   let selectedColor = null;
+  let selectedSize = null;
 
   // Helpers
   const uniq = arr => [...new Set(arr.filter(Boolean))];
@@ -337,58 +339,58 @@ document.addEventListener("DOMContentLoaded", () => {
   const variantImageUrl = v =>
     v.featured_image ? (v.featured_image.src || v.featured_image) : (product.featured_image || product.images[0] || "");
 
-  // Match variant by size + color
+  // Match variant by color + size
   function matchVariant() {
     return product.variants.find(v => {
-      const okSize = selectedSize ? v.option1 === selectedSize : true;
-      const okColor  = selectedColor ? v.option2 === selectedColor : true;
-      return okSize && okColor;
+      const okColor = selectedColor ? v.option1 === selectedColor : true;
+      const okSize  = selectedSize ? v.option2 === selectedSize : true;
+      return okColor && okSize;
     });
   }
 
-  // Render Size buttons (option1)
-  function renderSizes() {
-    const sizes = uniq(product.variants.map(v => v.option1));
-    sizeWrap.innerHTML = "";
-    sizes.forEach(s => {
+  // Render Color buttons (option1)
+  function renderColors() {
+    const colors = uniq(product.variants.map(v => v.option1));
+    colorWrap.innerHTML = "";
+    colors.forEach(c => {
       const b = document.createElement("button");
       b.type = "button";
-      b.className = "variant-size-btn";
-      b.textContent = s;
-      if (s === selectedSize) b.classList.add("active");
+      b.className = "variant-color-btn";
+      b.textContent = c;
+      if (c === selectedColor) b.classList.add("active");
       b.addEventListener("click", () => {
-        selectedSize = s;
-        renderColors();
-        updateVariant();
+        selectedColor = c;
         renderSizes();
+        updateVariant();
+        renderColors();
       });
-      sizeWrap.appendChild(b);
+      colorWrap.appendChild(b);
     });
   }
 
-  // Render Color dropdown (option2 filtered by size)
-  function renderColors() {
-    const colors = uniq(
+  // Render Size dropdown (option2 filtered by color)
+  function renderSizes() {
+    const sizes = uniq(
       product.variants
-        .filter(v => !selectedSize || v.option1 === selectedSize)
+        .filter(v => !selectedColor || v.option1 === selectedColor)
         .map(v => v.option2)
     );
-    colorSelect.innerHTML = "";
+    sizeSelect.innerHTML = "";
     const ph = document.createElement("option");
     ph.value = "";
-    ph.textContent = "Choose your color";
+    ph.textContent = "Choose your size";
     ph.disabled = true;
     ph.selected = true;
-    colorSelect.appendChild(ph);
-    colors.forEach(c => {
+    sizeSelect.appendChild(ph);
+    sizes.forEach(s => {
       const o = document.createElement("option");
-      o.value = c;
-      o.textContent = c;
-      if (c === selectedColor) o.selected = true;
-      colorSelect.appendChild(o);
+      o.value = s;
+      o.textContent = s;
+      if (s === selectedSize) o.selected = true;
+      sizeSelect.appendChild(o);
     });
-    colorSelect.addEventListener("change", () => {
-      selectedColor = colorSelect.value;
+    sizeSelect.addEventListener("change", () => {
+      selectedSize = sizeSelect.value;
       updateVariant();
     });
   }
@@ -409,16 +411,16 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(r => r.json())
       .then(p => {
         product = p;
-        selectedSize = null;
         selectedColor = null;
+        selectedSize = null;
 
         titleEl.textContent = p.title;
         descEl.innerHTML = p.description || "";
         priceEl.textContent = formatPrice(p.price);
         imgEl.src = p.featured_image || p.images[0];
 
-        renderSizes();
         renderColors();
+        renderSizes();
         popup.classList.remove("hidden");
       });
   }
@@ -438,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addBtn.addEventListener("click", e => {
     e.preventDefault();
     const id = addBtn.dataset.variantId;
-    if (!id) { alert("Please select size & color"); return; }
+    if (!id) { alert("Please select color & size"); return; }
     fetch("/cart/add.js", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -452,6 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
