@@ -3980,6 +3980,16 @@ label.popup-size {
   background-position: right 20px center;
   background-size: 16px;
 }
+select#popup-size:before {
+    content: "";
+    position: absolute;
+    top: 25%;
+    bottom: 25%;
+    right: 32px;
+    width: 1px;
+    background: #ccc;
+    z-index: 2;
+}
 /* On focus */
 #popup-size:focus {
   border-color: #000;
