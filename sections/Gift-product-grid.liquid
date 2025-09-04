@@ -250,7 +250,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* auto 2; adjust if you have more colours */
   gap: 0;
-  border: 1px solid #1a1a1a;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -460,7 +459,7 @@
   }
 }); {% endcomment %}
 
-document.addEventListener("DOMContentLoaded", () => {
+{% comment %} document.addEventListener("DOMContentLoaded", () => {
   const popup = document.querySelector("#quick-view-popup");
   const closeBtn = document.querySelector(".popup-close");
   const titleEl = document.querySelector("#popup-title");
@@ -588,6 +587,141 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(r => r.json())
     .then(() => alert("Added to cart!"));
   });
+}); {% endcomment %}
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.querySelector("#quick-view-popup");
+  const closeBtn = document.querySelector(".popup-close");
+  const titleEl = document.querySelector("#popup-title");
+  const priceEl = document.querySelector("#popup-price");
+  const descEl  = document.querySelector("#popup-description");
+  const imgEl   = document.querySelector("#popup-image");
+  const colorWrap = document.querySelector("#popup-color");   // container for Color buttons
+  const sizeSelect = document.querySelector("#popup-variants"); // dropdown for Size
+  const addBtn  = document.querySelector("#popup-add-to-cart");
+
+  let product = null;
+  let selectedColor = null;
+  let selectedSize  = null;
+
+  // Helpers
+  const uniq = arr => [...new Set(arr.filter(Boolean))];
+  const formatPrice = c => (c / 100).toFixed(2) + " " + (Shopify.currency?.active || "");
+  const variantImageUrl = v =>
+    v.featured_image ? (v.featured_image.src || v.featured_image) : (product.featured_image || product.images[0] || "");
+
+  // Find variant by color + size
+  function matchVariant() {
+    return product.variants.find(v => {
+      const okColor = selectedColor ? v.option1 === selectedColor : true;
+      const okSize  = selectedSize ? v.option2 === selectedSize : true;
+      return okColor && okSize;
+    });
+  }
+
+  // Render Color buttons
+  function renderColors() {
+    const colors = uniq(product.variants.map(v => v.option1));
+    colorWrap.innerHTML = "";
+    colors.forEach(c => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "variant-color-btn";
+      b.textContent = c;
+      if (c === selectedColor) b.classList.add("active");
+      b.addEventListener("click", () => {
+        selectedColor = c;
+        renderSizes();
+        updateVariant();
+        renderColors(); // re-render to update active state
+      });
+      colorWrap.appendChild(b);
+    });
+  }
+
+  // Render Size dropdown (filtered by selected color)
+  function renderSizes() {
+    const sizes = uniq(
+      product.variants
+        .filter(v => !selectedColor || v.option1 === selectedColor)
+        .map(v => v.option2)
+    );
+    sizeSelect.innerHTML = "";
+    const ph = document.createElement("option");
+    ph.value = "";
+    ph.textContent = "Choose your size";
+    ph.disabled = true;
+    ph.selected = true;
+    sizeSelect.appendChild(ph);
+    sizes.forEach(s => {
+      const o = document.createElement("option");
+      o.value = s;
+      o.textContent = s;
+      sizeSelect.appendChild(o);
+    });
+    sizeSelect.addEventListener("change", () => {
+      selectedSize = sizeSelect.value;
+      updateVariant();
+    });
+  }
+
+  // Update price + image + add-to-cart id
+  function updateVariant() {
+    const v = matchVariant();
+    if (v) {
+      priceEl.textContent = formatPrice(v.price);
+      imgEl.src = variantImageUrl(v);
+      addBtn.dataset.variantId = v.id;
+    }
+  }
+
+  // Open popup with product details
+  function openQuickView(handle) {
+    fetch(`/products/${handle}.js`)
+      .then(r => r.json())
+      .then(p => {
+        product = p;
+        selectedColor = null;
+        selectedSize = null;
+
+        titleEl.textContent = p.title;
+        descEl.innerHTML = p.description || "";
+        priceEl.textContent = formatPrice(p.price);
+        imgEl.src = p.featured_image || p.images[0];
+
+        renderColors();
+        renderSizes();
+        popup.classList.remove("hidden");
+      });
+  }
+
+  // Bind Quick View buttons
+  document.querySelectorAll(".quick-view-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      openQuickView(btn.dataset.handle);
+    });
+  });
+
+  // Close popup
+  closeBtn.addEventListener("click", () => popup.classList.add("hidden"));
+
+  // Add to Cart
+  addBtn.addEventListener("click", e => {
+    e.preventDefault();
+    const id = addBtn.dataset.variantId;
+    if (!id) { alert("Please select color & size"); return; }
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, quantity: 1 })
+    })
+    .then(r => r.json())
+    .then(() => {
+      alert("Added to cart!");
+      popup.classList.add("hidden");
+    });
+  });
 });
+
 </script>
 
