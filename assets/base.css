@@ -3966,9 +3966,9 @@ label.popup-size {
   width: 100%;
   padding: 15px 40px 15px 12px;
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 1px solid #000;
   background-color: #fff;
-  color: #333;
+  color: #000;
   margin-bottom: 30px;
   /* Remove default arrow */
   appearance: none;
