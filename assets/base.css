@@ -3979,18 +3979,6 @@ label.popup-size {
   background-repeat: no-repeat;
   background-position: right 20px center;
   background-size: 16px;
-  position:relative;
-}
-select#popup-size:before {
-    content: "|";
-    position: absolute;
-    top: 25%;
-    bottom: 25%;
-    right: 32px;
-    width: 1px;
-    background: #ccc;
-    z-index: 2;
-    display:block;
 }
 /* On focus */
 #popup-size:focus {
